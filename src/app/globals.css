@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+:root {
+  --milk: #FFFBF2;
+  --espresso: #211A16;
+  --mango: #FFB300;
+  --mango-dark: #F57F17;
+  --teal: #00796B;
+  --teal-dark: #004D40;
+  --crimson: #D32F2F;
+  --calamansi: #2E7D32;
+  --tin: #EFEBE9;
+  --plate-border: #E6DED6;
+}
+
+@theme inline {
+  --color-milk: var(--milk);
+  --color-espresso: var(--espresso);
+  --color-mango: var(--mango);
+  --color-mango-dark: var(--mango-dark);
+  --color-teal: var(--teal);
+  --color-teal-dark: var(--teal-dark);
+  --color-crimson: var(--crimson);
+  --color-calamansi: var(--calamansi);
+  --color-tin: var(--tin);
+  --color-plate-border: var(--plate-border);
+  --font-display: var(--font-space), system-ui, sans-serif;
+  --font-mono: var(--font-jb), ui-monospace, monospace;
+}
+
+html,
+body {
+  background-color: var(--milk);
+  background-image: radial-gradient(rgba(120, 80, 50, 0.08) 1px, transparent 1px);
+  background-size: 14px 14px;
+  color: var(--espresso);
+  font-family: var(--font-space), system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+/* Enamel Signboard Plates */
+.enamel-plate {
+  background-color: var(--plate-bg, #FFFFFF);
+  border: 1.5px solid var(--plate-border);
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(60, 40, 20, 0.07), 0 1px 3px rgba(60, 40, 20, 0.05);
+}
+
+.enamel-plate-sm {
+  background-color: #FFFFFF;
+  border: 1px solid var(--plate-border);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(60, 40, 20, 0.05);
+}
+
+.enamel-press {
+  transition: transform 80ms ease, box-shadow 80ms ease, opacity 80ms ease;
+}
+.enamel-press:active:not(:disabled) {
+  transform: scale(0.98);
+  box-shadow: 0 1px 3px rgba(60, 40, 20, 0.1);
+}
+
+.sign-dropshadow {
+  text-shadow: 1px 1px 0px rgba(33, 26, 22, 0.15);
+}
+
+.sari-paper {
+  background-color: #FFFDF9;
+  border: 1.5px solid #EAE2D8;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(60, 40, 20, 0.06);
+}
+
+.receipt-edge {
+  --s: 12px;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--s) 100%;
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--s) 100%;
+  padding-bottom: 12px;
+}
+
+.jeepney-stripes {
+  background: repeating-linear-gradient(45deg, var(--mango) 0, var(--mango) 12px, var(--espresso) 12px, var(--espresso) 24px);
+}
