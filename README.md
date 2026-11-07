@@ -1,6 +1,6 @@
 # 🍢 Kahit Saan
 
-> *"Stop asking 'Kahit Saan.' Ekis what you hate, kain what survives."*
+> *"Stop asking 'Kahit Saan'. Ekis what you hate, kain what survives."*
 
 **Kahit Saan** is a mobile-first, real-time multiplayer micro-party game built to end barkada indecision in under a minute. No accounts, no installs—just drop the room link in the GC and vote.
 

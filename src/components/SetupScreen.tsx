@@ -64,7 +64,7 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
             KAHIT SAAN
           </h1>
           <p className="mt-1.5 text-xs font-semibold leading-snug text-espresso/80">
-            Stop asking &quot;Kahit Saan.&quot; Ekis what you hate, kain what survives.
+            Stop asking &quot;Kahit Saan&quot;. Ekis what you hate, kain what survives.
           </p>
         </div>
       </header>
