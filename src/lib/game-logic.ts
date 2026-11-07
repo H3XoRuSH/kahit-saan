@@ -3,14 +3,15 @@ import type { FeedEvent, OptionCard, Player, TokenKind } from "./types";
 export const MAX_STRIKES_PER_PLAYER = 2;
 export const MAX_HEARTS_PER_PLAYER = 1;
 
-/** Strike limit auto-scales from 2 to 3 for groups of 6+ players. */
+/** Strike limit requires a strict >50% majority to eliminate an option. */
 export function strikeLimitFor(playerCount: number): number {
-  return playerCount >= 6 ? 3 : 2;
+  if (playerCount <= 2) return 2;
+  return Math.ceil((playerCount + 1) / 2);
 }
 
-/** netStrikes = max(0, strikes - hearts) */
+/** netStrikes = max(0, strikes - (hearts * 2)) — 1 BET absorbs 2 EKIS */
 export function netStrikes(card: OptionCard): number {
-  return Math.max(0, card.strikesFrom.length - card.heartsFrom.length);
+  return Math.max(0, card.strikesFrom.length - card.heartsFrom.length * 2);
 }
 
 /** An option is eliminated (banned) once net strikes reach the limit. */

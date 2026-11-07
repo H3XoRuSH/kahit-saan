@@ -11,8 +11,8 @@
 Every player receives exactly 3 tokens with zero math bloat:
 
 - **❌ EKIS (2 Tokens):** Veto choices you hate. Maximum 1 strike per option.
-- **❤️ BET (1 Token):** Crave what you want. Adds craving points and cancels out 1 strike.
-- **💀 Banned State:** When net strikes reach the limit (`2` for small groups, auto-scales to `3` for 6+ players), the card shatters and is eliminated.
+- **❤️ BET (1 Token):** Crave what you want. Adds craving points and double-shields the card (cancels out 2 strikes).
+- **💀 Banned State:** When net strikes reach the limit (strict >50% majority: `2` for 2–3 players, `3` for 4–5 players, scaling dynamically), the card shatters and is eliminated.
 - **⚡ 5-Second Tap War:** If survivors tie on craving points and strikes, all players mash the screen for 5 seconds to crown the winner.
 - **🧾 The Barkada Resibo:** Generates a copy-pasteable street-food receipt for Messenger, Telegram, or Discord, complete with awards (*Master Butcher*, *Lifesaver*, and *Certified "Kahit Saan"*).
 
