@@ -146,7 +146,7 @@ export function JoinGate({
           onClick={onJoin}
           className="enamel-press rounded-2xl border border-teal-dark bg-teal py-4 font-mono text-base font-bold tracking-wider text-white shadow-md hover:bg-teal-dark"
         >
-          JOIN THE PURGE 🔪
+          JOIN THE PURGE
         </button>
       </div>
 
