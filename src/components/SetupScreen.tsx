@@ -222,7 +222,7 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
       </div>
 
       {/* Sticky Bottom Boarding Trigger */}
-      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-[430px] border-t border-plate-border bg-milk/95 px-4 pb-5 pt-3 shadow-md backdrop-blur-xs">
+      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-[430px] border-t border-plate-border bg-milk/95 px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 shadow-md backdrop-blur-xs">
         <button
           disabled={!valid}
           onClick={() => onCreate(cfg())}

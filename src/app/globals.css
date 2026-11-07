@@ -37,6 +37,29 @@ body {
   font-family: var(--font-space), system-ui, sans-serif;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior: none;
+  caret-color: var(--teal);
+}
+
+::selection {
+  background-color: var(--mango);
+  color: var(--espresso);
+}
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--milk);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--plate-border);
+  border-radius: 9999px;
 }
 
 /* Enamel Signboard Plates */

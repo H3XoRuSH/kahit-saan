@@ -56,7 +56,7 @@ export default function TapWar({ room, tap, isGuest, dispatch, act }: Props) {
   const left = Math.max(0, tap.endsAt - now);
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col gap-3.5 p-4 bg-milk">
+    <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col gap-3.5 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] bg-milk">
       {/* Horn Duel Header */}
       <motion.div
         animate={{ scale: [1, 1.015, 1] }}
@@ -70,7 +70,7 @@ export default function TapWar({ room, tap, isGuest, dispatch, act }: Props) {
         <div className="sign-dropshadow font-extrabold text-2xl leading-tight">
           5-SECOND TAP WAR!
         </div>
-        <div className="my-1 font-mono text-4xl font-extrabold">
+        <div className="my-1 font-mono text-4xl font-extrabold tabular-nums">
           {(left / 1000).toFixed(1)}s
         </div>
         <div className="mx-auto h-3 w-4/5 overflow-hidden rounded-full border border-plate-border bg-white">
@@ -90,7 +90,7 @@ export default function TapWar({ room, tap, isGuest, dispatch, act }: Props) {
               key={o.id}
               whileTap={{ scale: 0.97 }}
               onPointerDown={() => onTap(o.id)}
-              className={`enamel-press flex flex-1 select-none flex-col items-center justify-center gap-1.5 rounded-2xl border p-4 shadow-md transition-all ${
+              className={`enamel-press flex min-h-[140px] flex-1 select-none flex-col items-center justify-center gap-1.5 rounded-2xl border p-4 shadow-md transition-all ${
                 isSecond
                   ? "border-teal-dark bg-teal text-white hover:bg-teal-dark"
                   : "border-crimson bg-crimson text-white hover:bg-red-700"

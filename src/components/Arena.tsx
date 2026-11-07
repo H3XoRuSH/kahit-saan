@@ -42,11 +42,11 @@ export default function Arena({ room, meId, isGuest, dispatch, act }: Props) {
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col">
       {/* Sticky Jeepney Dashboard HUD */}
-      <div className="sticky top-0 z-20 border-b border-plate-border bg-milk/95 px-3.5 pb-2.5 pt-3 shadow-xs backdrop-blur-xs">
+      <div className="sticky top-0 z-20 border-b border-plate-border bg-milk/95 px-3.5 pb-2.5 pt-[max(0.75rem,env(safe-area-inset-top))] shadow-xs backdrop-blur-xs">
         <div className="mb-1.5 flex items-center justify-between font-mono text-xs font-bold uppercase text-espresso">
           <span className="truncate">{room.roomCode} · {room.category}</span>
           <span
-            className={`rounded-md px-2 py-0.5 font-bold transition-colors ${
+            className={`rounded-md px-2 py-0.5 font-bold tabular-nums transition-colors ${
               urgent ? "bg-crimson text-white animate-pulse" : "bg-mango/40 text-espresso"
             }`}
           >
@@ -89,7 +89,7 @@ export default function Arena({ room, meId, isGuest, dispatch, act }: Props) {
       </div>
 
       {/* Sticky Bottom Control Fare Box */}
-      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-[430px] flex-col gap-2 border-t border-plate-border bg-milk/95 p-3 shadow-lg backdrop-blur-xs">
+      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-[430px] flex-col gap-2 border-t border-plate-border bg-milk/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-lg backdrop-blur-xs">
         <TokenDock
           options={room.options}
           meId={meId}
