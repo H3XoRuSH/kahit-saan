@@ -1,3 +1,5 @@
+import { useSyncExternalStore } from "react";
+
 const KEY = "kahit-saan-player-id";
 
 /** Stable per-tab player id (survives refresh → reconnect keeps your tokens). */
@@ -28,6 +30,20 @@ export function avatarFor(id: string): string {
   return AVATARS[h % AVATARS.length];
 }
 
+export function defaultNickname(id: string): string {
+  return `Gutom ${id.slice(-3).toUpperCase()}`;
+}
+
+const noopSubscribe = () => () => {};
+
+export function useDefaultAlias(): string {
+  return useSyncExternalStore(
+    noopSubscribe,
+    () => defaultNickname(getPlayerId()),
+    () => ""
+  );
+}
+
 export function displayName(nickname: string, id: string): string {
-  return nickname.trim() || `Gutom ${id.slice(-3).toUpperCase()}`;
+  return nickname.trim() || defaultNickname(id);
 }

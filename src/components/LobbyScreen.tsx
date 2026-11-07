@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Copy, Dices, Rocket } from "lucide-react";
 import { RANDOM_NICKNAMES } from "@/lib/nicknames";
+import { useDefaultAlias } from "@/lib/identity";
+import AliasTooltip from "@/components/AliasTooltip";
 import { getSupabase } from "@/lib/supabase";
 import type { GameConfig, HumanInfo } from "@/lib/types";
 
@@ -21,6 +23,7 @@ export function JoinGate({
   onBack: () => void;
 }) {
   const [status, setStatus] = useState<"checking" | "found" | "not_found">("checking");
+  const defaultAlias = useDefaultAlias();
 
   useEffect(() => {
     let isMounted = true;
@@ -122,14 +125,16 @@ export function JoinGate({
         </div>
 
         <div>
-          <label className="mb-1.5 block font-mono text-xs font-bold uppercase text-espresso">
-            YOUR BARKADA ALIAS
-          </label>
+          <div className="mb-1.5 flex items-center gap-1.5 font-mono text-xs font-bold uppercase text-espresso">
+            <span>YOUR BARKADA ALIAS</span>
+            <AliasTooltip defaultAlias={defaultAlias} />
+          </div>
           <div className="flex gap-2">
             <input
               value={nickname}
               maxLength={20}
-              placeholder="Your nickname"
+              placeholder={defaultAlias ? `e.g. ${defaultAlias}` : "Your nickname"}
+              title={`You will be introduced as ${defaultAlias} if no alias is entered`}
               onChange={(e) => onNick(e.target.value)}
               className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-sm font-bold text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
             />
@@ -140,6 +145,11 @@ export function JoinGate({
               <Dices size={16} strokeWidth={2.5} /> Roll
             </button>
           </div>
+          {!nickname.trim() && defaultAlias && (
+            <p className="mt-1.5 font-mono text-[11px] text-espresso/60">
+              Entering as <span className="font-bold text-espresso">{defaultAlias}</span>
+            </p>
+          )}
         </div>
 
         <button
