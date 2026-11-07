@@ -1,5 +1,5 @@
 export type RoomStatus = "lobby" | "active" | "tiebreaker" | "finished";
-export type Phase = "setup" | "join" | "lobby" | "arena" | "tapwar" | "receipt";
+export type Phase = "setup" | "join" | "lobby" | "arena" | "tapwar" | "wheel" | "receipt";
 export type TokenKind = "strike" | "heart";
 export type Role = "host" | "guest";
 
@@ -53,6 +53,14 @@ export interface GameConfig {
 export interface TapWarState {
   endsAt: number;
   finalists: string[]; // option ids
+}
+
+export interface WheelState {
+  candidateIds: string[];
+  winnerId: string;
+  targetRotation: number;
+  startedAt: number;
+  durationMs: number;
 }
 
 export interface HumanInfo {

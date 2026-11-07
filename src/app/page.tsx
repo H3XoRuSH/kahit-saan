@@ -7,6 +7,7 @@ import SetupScreen from "@/components/SetupScreen";
 import LobbyScreen, { JoinGate } from "@/components/LobbyScreen";
 import Arena from "@/components/Arena";
 import TapWar from "@/components/TapWar";
+import SpinWheel from "@/components/SpinWheel";
 import Receipt from "@/components/Receipt";
 import type { GameConfig } from "@/lib/types";
 
@@ -79,6 +80,9 @@ export default function Home() {
       )}
       {phase === "tapwar" && room && tap && (
         <TapWar key={state.gameId} room={room} tap={tap} isGuest={isGuest} dispatch={dispatch} act={act} />
+      )}
+      {phase === "wheel" && room && state.wheel && (
+        <SpinWheel key={state.gameId} room={room} wheel={state.wheel} isGuest={isGuest} dispatch={dispatch} />
       )}
       {phase === "receipt" && room && (
         <Receipt

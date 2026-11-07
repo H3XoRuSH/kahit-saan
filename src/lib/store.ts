@@ -11,6 +11,7 @@ import type {
   RoomState,
   TapWarState,
   TokenKind,
+  WheelState,
 } from "./types";
 import { decideWinner, describePlacement, placeToken, strikeLimitFor } from "./game-logic";
 import { avatarFor, displayName } from "./identity";
@@ -25,6 +26,7 @@ export interface GameState {
   config: GameConfig | null;
   room: RoomState | null;
   tap: TapWarState | null;
+  wheel: WheelState | null;
   nickname: string;
   role: Role;
   roomCode: string | null;
@@ -39,6 +41,7 @@ export interface SyncSnapshot {
   config: GameConfig | null;
   room: RoomState | null;
   tap: TapWarState | null;
+  wheel: WheelState | null;
   hostId: string;
 }
 
@@ -56,6 +59,7 @@ export type Action =
   | { type: "TICK"; now: number }
   | { type: "TAP"; optionId: string; n: number }
   | { type: "TAP_END"; r: number }
+  | { type: "WHEEL_END" }
   | { type: "RESET" };
 
 export const initialState: GameState = {
@@ -64,6 +68,7 @@ export const initialState: GameState = {
   config: null,
   room: null,
   tap: null,
+  wheel: null,
   nickname: "",
   role: "host",
   roomCode: null,
@@ -114,6 +119,7 @@ function resolve(state: GameState, room: RoomState, now: number): GameState {
       ...state,
       phase: "receipt",
       tap: null,
+      wheel: null,
       room: { ...room, status: "finished", winnerId: d.winnerId },
     };
   }
@@ -121,6 +127,7 @@ function resolve(state: GameState, room: RoomState, now: number): GameState {
     ...state,
     phase: "tapwar",
     tap: { endsAt: now + TAP_WAR_MS, finalists: d.finalists },
+    wheel: null,
     room: {
       ...room,
       status: "tiebreaker",
@@ -161,6 +168,7 @@ export function reducer(state: GameState, a: Action): GameState {
         phase: "lobby",
         room: null,
         tap: null,
+        wheel: null,
         humans: [],
       };
     case "OPEN_JOIN":
@@ -181,6 +189,7 @@ export function reducer(state: GameState, a: Action): GameState {
         config: a.snap.config,
         room: a.snap.room,
         tap: a.snap.tap,
+        wheel: a.snap.wheel,
         hostId: a.snap.hostId,
       };
     case "START": {
@@ -193,6 +202,7 @@ export function reducer(state: GameState, a: Action): GameState {
         gameId: state.gameId + 1,
         config: a.config,
         tap: null,
+        wheel: null,
         room: buildRoom(a.config, humans, state.roomCode ?? "ROOM", a.now),
       };
     }
@@ -236,12 +246,41 @@ export function reducer(state: GameState, a: Action): GameState {
       const fin = state.room.options.filter((o) => state.tap!.finalists.includes(o.id));
       const max = Math.max(...fin.map((o) => o.tiebreakerTaps));
       const top = fin.filter((o) => o.tiebreakerTaps === max);
-      const winner = top[Math.floor(a.r * top.length) % top.length];
+      if (top.length === 1) {
+        return {
+          ...state,
+          phase: "receipt",
+          tap: null,
+          wheel: null,
+          room: { ...state.room, status: "finished", winnerId: top[0].id },
+        };
+      }
+      // Tied in tap war -> Spin the wheel among all tied options!
+      const winnerIndex = Math.floor(a.r * top.length) % top.length;
+      const winner = top[winnerIndex];
+      const sliceAngle = 360 / top.length;
+      // Target angle places winner slice under the top pointer (0 deg).
+      const targetRotation = 1800 + (360 - (winnerIndex + 0.5) * sliceAngle);
+      return {
+        ...state,
+        phase: "wheel",
+        tap: null,
+        wheel: {
+          candidateIds: top.map((o) => o.id),
+          winnerId: winner.id,
+          targetRotation,
+          startedAt: Date.now(),
+          durationMs: 4500,
+        },
+      };
+    }
+    case "WHEEL_END": {
+      if (!state.room || !state.wheel) return state;
       return {
         ...state,
         phase: "receipt",
-        tap: null,
-        room: { ...state.room, status: "finished", winnerId: winner.id },
+        wheel: null,
+        room: { ...state.room, status: "finished", winnerId: state.wheel.winnerId },
       };
     }
     case "RESET":

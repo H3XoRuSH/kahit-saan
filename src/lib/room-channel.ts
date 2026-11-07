@@ -56,6 +56,7 @@ export function useRoomSync(state: GameState, dispatch: Dispatch<Action>) {
         config: s.config,
         room: s.room,
         tap: s.tap,
+        wheel: s.wheel,
         hostId: s.meId,
         hostNow: Date.now(),
       });
@@ -135,12 +136,13 @@ export function useRoomSync(state: GameState, dispatch: Dispatch<Action>) {
         config: state.config,
         room: state.room,
         tap: state.tap,
+        wheel: state.wheel,
         hostId: state.meId,
         hostNow: Date.now(),
       });
     }, 40);
     return () => clearTimeout(t);
-  }, [role, connected, state.phase, state.gameId, state.config, state.room, state.tap, state.meId]);
+  }, [role, connected, state]);
 
   return useCallback(
     (intent: Intent) => {
