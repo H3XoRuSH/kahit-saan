@@ -14,7 +14,7 @@ export const PRESETS: Preset[] = [
     label: "Where to Eat",
     winnerPrefix: "KAKAIN TAYO SA:",
     receiptSignoff: "SALAMAT, KAIN NA!",
-    options: ["Jollibee", "McDonald's", "Marugame Udon", "Frankies Wings", "Samgyupsal", "Ramen Nagi"],
+    options: ["Jollibee", "McDonald's", "KFC", "Wendy's", "Rodics", "24 Chicken"],
   },
   {
     id: "go",
@@ -22,7 +22,7 @@ export const PRESETS: Preset[] = [
     label: "Where to Go",
     winnerPrefix: "PUPUNTA TAYO SA:",
     receiptSignoff: "SALAMAT, TARA NA!",
-    options: ["BGC High Street", "Poblacion", "Mall of Asia", "Cafe Tambay", "Intramuros", "Arcade / Billiards"],
+    options: ["BGC", "Poblacion", "Mall of Asia", "Megamall", "Intramuros", "Greenfield"],
   },
   {
     id: "play",
@@ -30,7 +30,7 @@ export const PRESETS: Preset[] = [
     label: "What to Play",
     winnerPrefix: "LALARUIN NATIN ANG:",
     receiptSignoff: "SALAMAT, LARO NA!",
-    options: ["Valorant", "Mobile Legends", "Steam Party Games", "Roblox", "Board Games / Cards", "Lethal Company / Co-op"],
+    options: ["Valorant", "Mobile Legends", "Steam Party Games", "Roblox", "Palworld", "Escape Simulator"],
   },
   {
     id: "watch",
@@ -38,7 +38,15 @@ export const PRESETS: Preset[] = [
     label: "What to Watch",
     winnerPrefix: "PANONOORIN NATIN ANG:",
     receiptSignoff: "SALAMAT, PLAY NA!",
-    options: ["Horror Movie", "Anime Series", "KDrama", "Action / Thriller", "Comedy Film", "True Crime Docu"],
+    options: ["Horror", "Anime", "KDrama", "Action / Thriller", "Comedy", "True Crime Docu"],
+  },
+  {
+    id: "activity",
+    emoji: "🎯",
+    label: "What to Do",
+    winnerPrefix: "GAGAWIN NATIN ANG:",
+    receiptSignoff: "SALAMAT, TARA NA!",
+    options: ["Karaoke / KTV", "Bowling", "Billiards", "Escape Room", "Archery / Shooting", "Board Game Cafe"],
   },
   {
     id: "custom",
