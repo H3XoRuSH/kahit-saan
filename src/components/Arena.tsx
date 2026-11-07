@@ -6,7 +6,7 @@ import type { Intent, RoomState } from "@/lib/types";
 import type { Action } from "@/lib/store";
 import { strikesUsed } from "@/lib/game-logic";
 import { nowMs } from "@/lib/clock";
-import { FoodCard, Ticker, TokenDock } from "./ArenaParts";
+import { FoodCard, TokenDock } from "./ArenaParts";
 
 interface Props {
   room: RoomState;
@@ -73,7 +73,7 @@ export default function Arena({ room, meId, isGuest, dispatch, act }: Props) {
       </div>
 
       {/* Grid of Route Signboard Cards */}
-      <div className="grid flex-1 auto-rows-fr grid-cols-2 content-start gap-3 p-3.5 pb-48">
+      <div className="grid flex-1 auto-rows-fr grid-cols-2 content-start gap-3 p-3.5 pb-28">
         {room.options.map((o) => (
           <FoodCard
             key={o.id}
@@ -97,7 +97,6 @@ export default function Arena({ room, meId, isGuest, dispatch, act }: Props) {
           onPickUp={place}
           onLock={() => act({ t: "lock" })}
         />
-        <Ticker feed={room.feed} />
       </div>
     </main>
   );

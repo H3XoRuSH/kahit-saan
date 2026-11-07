@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import type { FeedEvent, OptionCard } from "@/lib/types";
+import type { OptionCard } from "@/lib/types";
 import { isEliminated, netStrikes } from "@/lib/game-logic";
 
 interface CardProps {
@@ -184,60 +184,6 @@ export function TokenDock({ options, meId, locked, onPickUp, onLock }: DockProps
           "LOCK IN"
         )}
       </button>
-    </div>
-  );
-}
-
-export function Ticker({ feed }: { feed: FeedEvent[] }) {
-  const last = feed.slice(-2);
-  const who = (e: FeedEvent) => e.playerName;
-
-  const line = (e: FeedEvent) => {
-    switch (e.type) {
-      case "strike":
-        return (
-          <>
-            ❌ <b>{who(e)}</b> struck <b>{e.optionTitle}</b>{e.strikesLeft ? ` (${e.strikesLeft} to ekis)` : ""}
-          </>
-        );
-      case "ban":
-        return (
-          <>
-            💀 <b>{who(e)}</b> eliminated <b>{e.optionTitle}</b> — EKIS NA!
-          </>
-        );
-      case "save":
-        return (
-          <>
-            ❤️ <b>{who(e)}</b> saved <b>{e.optionTitle}</b> with a heart!
-          </>
-        );
-      case "heart":
-        return (
-          <>
-            ❤️ <b>{who(e)}</b> bet on <b>{e.optionTitle}</b>.
-          </>
-        );
-    }
-  };
-
-  return (
-    <div className="h-12 overflow-hidden rounded-xl border border-plate-border bg-white px-3 py-1.5 font-mono text-[11px] leading-tight text-espresso shadow-2xs">
-      {last.length === 0 && <div className="font-bold opacity-50">TRIP LIVE: PLACE YOUR TOKENS!</div>}
-      <AnimatePresence initial={false} mode="popLayout">
-        {last.map((e) => (
-          <motion.div
-            key={e.id}
-            layout
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            className="truncate font-medium"
-          >
-            {line(e)}
-          </motion.div>
-        ))}
-      </AnimatePresence>
     </div>
   );
 }
