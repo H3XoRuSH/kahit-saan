@@ -53,7 +53,7 @@ export const PRESETS: Preset[] = [
     emoji: "✏️",
     label: "Custom",
     winnerPrefix: "PINILI NATIN ANG:",
-    receiptSignoff: "SALAMAT SA PAGBOTO! WALANG SISISIHAN.",
+    receiptSignoff: "SALAMAT SA PAGBOTO! WALANG SISIHAN.",
     options: ["", "", "", ""],
   },
 ];
@@ -63,6 +63,6 @@ export function getThemeCopy(themeId?: string): { winnerPrefix: string; receiptS
   if (found) return { winnerPrefix: found.winnerPrefix, receiptSignoff: found.receiptSignoff };
   return {
     winnerPrefix: "PINILI NATIN ANG:",
-    receiptSignoff: "SALAMAT SA PAGBOTO! WALANG SISISIHAN.",
+    receiptSignoff: "SALAMAT SA PAGBOTO! WALANG SISIHAN.",
   };
 }

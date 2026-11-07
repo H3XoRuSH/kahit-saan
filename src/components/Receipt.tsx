@@ -163,7 +163,7 @@ export default function Receipt({ room, onRematch, onHome, isGuest }: Props) {
         <div className="text-center font-mono">
           <div className="text-xs tracking-[0.4em] font-bold text-espresso/40">||||| ||| |||| || |||||</div>
           <div className="mt-1 font-bold text-xs uppercase">{theme.receiptSignoff}</div>
-          <div className="text-[9px] text-espresso/60 uppercase">WALANG SISISIHAN · SALAMAT SA BYAHE</div>
+          <div className="text-[9px] text-espresso/60 uppercase">WALANG SISIHAN · SALAMAT SA BYAHE</div>
         </div>
       </div>
 
