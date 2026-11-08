@@ -82,7 +82,7 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
             placeholder="KAIN-XXX"
             onChange={(e) => setCode(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && codeOk && onJoinCode(normalizeCode(code))}
-            className="enamel-plate-sm min-w-0 flex-1 bg-milk px-3.5 py-2 font-mono text-sm font-bold uppercase text-espresso outline-none placeholder:text-espresso/40 focus:border-teal"
+            className="enamel-plate-sm min-w-0 flex-1 bg-milk px-3.5 py-2 font-mono text-xs uppercase text-espresso outline-none placeholder:text-espresso/40 focus:border-teal"
           />
           <button
             disabled={!codeOk}
@@ -144,7 +144,7 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
                   maxLength={24}
                   placeholder={`Spot #${i + 1}`}
                   onChange={(e) => setOptions(options.map((x, j) => (j === i ? e.target.value : x)))}
-                  className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-sm font-bold text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
+                  className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-xs text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
                 />
                 <button
                   aria-label="Remove"
@@ -215,7 +215,7 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
               title={`You will be introduced as ${defaultAlias} if no alias is entered`}
               maxLength={20}
               onChange={(e) => onNick(e.target.value)}
-              className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-sm font-bold text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
+              className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-xs text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
             />
             <button
               onClick={() => onNick(RANDOM_NICKNAMES[Math.floor(Math.random() * RANDOM_NICKNAMES.length)])}

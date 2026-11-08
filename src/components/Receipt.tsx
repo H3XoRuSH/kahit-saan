@@ -67,7 +67,7 @@ export default function Receipt({ room, onRematch, onHome, isGuest }: Props) {
         <div className="font-mono text-xs font-bold uppercase tracking-widest text-espresso/80">
           {theme.winnerPrefix}
         </div>
-        <div className="sign-dropshadow my-1.5 font-extrabold text-3xl sm:text-4xl leading-tight tracking-tight text-espresso">
+        <div className="sign-dropshadow my-1.5 font-extrabold text-3xl sm:text-4xl leading-tight tracking-tight text-espresso [font-synthesis:weight]">
           {winner.title}
         </div>
         <div className="font-mono text-xs font-bold text-espresso/85">
@@ -96,7 +96,7 @@ export default function Receipt({ room, onRematch, onHome, isGuest }: Props) {
         </div>
         <div className="flex flex-col gap-1.5">
           <LeaderRow
-            label={`1. ${winner.title} 🏆`}
+            label={<span className="[font-synthesis:weight]">{`1. ${winner.title} 🏆`}</span>}
             value={`❤️${winner.heartsFrom.length} ❌${winner.strikesFrom.length}`}
           />
           {runners.map((o, i) => (

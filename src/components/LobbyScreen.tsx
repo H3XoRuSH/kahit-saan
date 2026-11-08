@@ -136,7 +136,7 @@ export function JoinGate({
               placeholder={defaultAlias ? `e.g. ${defaultAlias}` : "Your nickname"}
               title={`You will be introduced as ${defaultAlias} if no alias is entered`}
               onChange={(e) => onNick(e.target.value)}
-              className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-sm font-bold text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
+              className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-xs text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
             />
             <button
               onClick={() => onNick(RANDOM_NICKNAMES[Math.floor(Math.random() * RANDOM_NICKNAMES.length)])}

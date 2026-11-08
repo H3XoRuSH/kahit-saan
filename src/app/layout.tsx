@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const space = Space_Grotesk({ variable: "--font-space", subsets: ["latin"], weight: ["500", "600", "700"] });
-const jb = JetBrains_Mono({ variable: "--font-jb", subsets: ["latin"], weight: ["500", "700"] });
+const departureMono = localFont({
+  src: "./fonts/DepartureMono-Regular.woff2",
+  variable: "--font-mono-departure",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Kahit Saan - Main Menu",
@@ -27,7 +30,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${space.variable} ${jb.variable} h-full antialiased`}>
+    <html lang="en" className={`${departureMono.variable} h-full antialiased`}>
       <body className="min-h-dvh">{children}</body>
     </html>
   );
