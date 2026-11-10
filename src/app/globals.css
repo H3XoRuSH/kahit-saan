@@ -34,8 +34,8 @@ body {
   font-synthesis: none;
   -webkit-font-smoothing: antialiased;
   background-color: var(--milk);
-  background-image: radial-gradient(rgba(120, 80, 50, 0.08) 1px, transparent 1px);
-  background-size: 14px 14px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3Cpattern id='p' width='380' height='64' patternUnits='userSpaceOnUse' patternTransform='rotate(-25)'%3E%3Cline x1='0' y1='32' x2='380' y2='32' stroke='%23211A16' stroke-opacity='0.06' stroke-dasharray='3 5' stroke-width='1'/%3E%3Ctext x='0' y='22' font-family='ui-monospace, monospace' font-size='11' font-weight='bold' letter-spacing='2.5' fill='%23211A16' fill-opacity='0.085'%3EKAHIT SAAN  +--+  ROUTE 01  ....  PARA PO%3C/text%3E%3Ctext x='40' y='54' font-family='ui-monospace, monospace' font-size='11' font-weight='bold' letter-spacing='2.5' fill='%23211A16' fill-opacity='0.075'%3EDIRETSO LANG  ::::  BAYAD MUNA  ----  01%3C/text%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23p)'/%3E%3C/svg%3E");
+  background-attachment: fixed;
   color: var(--espresso);
   font-family: var(--font-mono-departure), ui-monospace, monospace;
   -webkit-tap-highlight-color: transparent;
