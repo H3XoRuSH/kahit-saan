@@ -95,10 +95,41 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
 
       {/* Main Order Clipboard Body */}
       <div className="sari-paper flex flex-col gap-4.5 p-4.5">
-        {/* Step 1: Decision Category Routes */}
+        {/* Step 1: Host Nickname */}
+        <section>
+          <div className="mb-2 flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
+            <span>1 · YOUR BARKADA ALIAS</span>
+            <AliasTooltip defaultAlias={defaultAlias} />
+          </div>
+          <div className="flex gap-2">
+            <input
+              value={nickname}
+              placeholder={defaultAlias ? `e.g. ${defaultAlias}` : "Your nickname"}
+              title={`You will be introduced as ${defaultAlias} if no alias is entered`}
+              maxLength={20}
+              onChange={(e) => onNick(e.target.value)}
+              className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-xs text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
+            />
+            <button
+              onClick={() => onNick(RANDOM_NICKNAMES[Math.floor(Math.random() * RANDOM_NICKNAMES.length)])}
+              className="enamel-press flex items-center gap-1.5 rounded-xl border border-mango-dark/40 bg-mango px-3.5 font-mono text-xs font-bold uppercase text-espresso shadow-xs"
+            >
+              <Dices size={16} strokeWidth={2.5} /> Roll
+            </button>
+          </div>
+          {!nickname.trim() && defaultAlias && (
+            <p className="mt-1.5 font-mono text-[11px] text-espresso/60">
+              Entering as <span className="font-bold text-espresso">{defaultAlias}</span>
+            </p>
+          )}
+        </section>
+
+        <div className="border-t border-plate-border/60" />
+
+        {/* Step 2: Decision Category Routes */}
         <section>
           <div className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
-            1 · PICK CATEGORY
+            2 · PICK CATEGORY
           </div>
           <div className="grid grid-cols-2 gap-2">
             {PRESETS.map((p) => {
@@ -123,10 +154,10 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
 
         <div className="border-t border-plate-border/60" />
 
-        {/* Step 2: Route Stops / Contenders */}
+        {/* Step 3: Route Stops / Contenders */}
         <section>
           <div className="mb-2 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-espresso">
-            <span>2 · ROUTE SPOTS</span>
+            <span>3 · ROUTE SPOTS</span>
             <span className="rounded border border-plate-border bg-white px-1.5 py-0.5 font-mono text-[10px] font-bold text-espresso">
               {clean.length}/8
             </span>
@@ -172,10 +203,10 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
 
         <div className="border-t border-plate-border/60" />
 
-        {/* Step 3: Round Timer */}
+        {/* Step 4: Round Timer */}
         <section>
           <div className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
-            ROUND TIMER
+            4 · ROUND TIMER
           </div>
           <div className="grid grid-cols-3 gap-2">
             {[30, 45, 60].map((s) => (
@@ -192,37 +223,6 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
               </button>
             ))}
           </div>
-        </section>
-
-        <div className="border-t border-plate-border/60" />
-
-        {/* Step 4: Host Nickname */}
-        <section>
-          <div className="mb-2 flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
-            <span>3 · YOUR BARKADA ALIAS</span>
-            <AliasTooltip defaultAlias={defaultAlias} />
-          </div>
-          <div className="flex gap-2">
-            <input
-              value={nickname}
-              placeholder={defaultAlias ? `e.g. ${defaultAlias}` : "Your nickname"}
-              title={`You will be introduced as ${defaultAlias} if no alias is entered`}
-              maxLength={20}
-              onChange={(e) => onNick(e.target.value)}
-              className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-xs text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
-            />
-            <button
-              onClick={() => onNick(RANDOM_NICKNAMES[Math.floor(Math.random() * RANDOM_NICKNAMES.length)])}
-              className="enamel-press flex items-center gap-1.5 rounded-xl border border-mango-dark/40 bg-mango px-3.5 font-mono text-xs font-bold uppercase text-espresso shadow-xs"
-            >
-              <Dices size={16} strokeWidth={2.5} /> Roll
-            </button>
-          </div>
-          {!nickname.trim() && defaultAlias && (
-            <p className="mt-1.5 font-mono text-[11px] text-espresso/60">
-              Entering as <span className="font-bold text-espresso">{defaultAlias}</span>
-            </p>
-          )}
         </section>
       </div>
 
