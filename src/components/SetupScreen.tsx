@@ -71,9 +71,8 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
 
       {/* Quick Join Stamped Voucher */}
       <section className="enamel-plate p-3.5">
-        <div className="mb-2 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-espresso">
-          <span>HAVE A ROOM CODE?</span>
-          <span className="text-[10px] font-bold text-teal">DIRECT BOARDING</span>
+        <div className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
+          HAVE A ROOM CODE?
         </div>
         <div className="flex gap-2">
           <input
@@ -98,9 +97,8 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
       <div className="sari-paper flex flex-col gap-4.5 p-4.5">
         {/* Step 1: Decision Category Routes */}
         <section>
-          <div className="mb-2 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-espresso">
-            <span>1 · PICK CATEGORY</span>
-            <span className="text-[10px] font-bold text-teal">[{preset.label}]</span>
+          <div className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
+            1 · PICK CATEGORY
           </div>
           <div className="grid grid-cols-2 gap-2">
             {PRESETS.map((p) => {
@@ -130,7 +128,7 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
           <div className="mb-2 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-espresso">
             <span>2 · ROUTE SPOTS</span>
             <span className="rounded border border-plate-border bg-white px-1.5 py-0.5 font-mono text-[10px] font-bold text-espresso">
-              {clean.length}/8 (MIN 4)
+              {clean.length}/8
             </span>
           </div>
           <ul className="flex flex-col gap-2">
@@ -176,9 +174,8 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
 
         {/* Step 3: Round Timer */}
         <section>
-          <div className="mb-2 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-espresso">
-            <span>ROUND TIMER</span>
-            <span className="text-[10px] font-bold text-espresso/70">SPEED RUN</span>
+          <div className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
+            ROUND TIMER
           </div>
           <div className="grid grid-cols-3 gap-2">
             {[30, 45, 60].map((s) => (
@@ -201,12 +198,9 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
 
         {/* Step 4: Host Nickname */}
         <section>
-          <div className="mb-2 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-espresso">
-            <div className="flex items-center gap-1.5">
-              <span>3 · YOUR BARKADA ALIAS</span>
-              <AliasTooltip defaultAlias={defaultAlias} />
-            </div>
-            <span className="text-[10px] font-bold text-espresso/70">DRIVER / HOST</span>
+          <div className="mb-2 flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
+            <span>3 · YOUR BARKADA ALIAS</span>
+            <AliasTooltip defaultAlias={defaultAlias} />
           </div>
           <div className="flex gap-2">
             <input
