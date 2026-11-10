@@ -47,13 +47,16 @@ export default function TapWar({ room, tap, isGuest, dispatch, act }: Props) {
     return () => clearInterval(t);
   }, [tap.endsAt, dispatch, act, isGuest]);
 
+  const rawLeft = Math.max(0, tap.endsAt - now);
+  const left = Math.min(TAP_WAR_MS, rawLeft);
+  const active = rawLeft <= TAP_WAR_MS;
+
   const onTap = (optionId: string) => {
+    if (!active) return;
     setMine((m) => m + 1);
     if (isGuest) pending.current[optionId] = (pending.current[optionId] ?? 0) + 1;
     else act({ t: "tap", optionId, n: 1 });
   };
-
-  const left = Math.max(0, tap.endsAt - now);
 
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col gap-3.5 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] bg-milk">

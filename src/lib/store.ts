@@ -18,6 +18,7 @@ import { avatarFor, displayName } from "./identity";
 import { useRoomSync } from "./room-channel";
 
 export const TAP_WAR_MS = 5000;
+export const TRANSITION_DELAY_MS = 1250;
 export const MIN_PLAYERS = 2;
 
 export interface GameState {
@@ -126,7 +127,7 @@ function resolve(state: GameState, room: RoomState, now: number): GameState {
   return {
     ...state,
     phase: "tapwar",
-    tap: { endsAt: now + TAP_WAR_MS, finalists: d.finalists },
+    tap: { endsAt: now + TRANSITION_DELAY_MS + TAP_WAR_MS, finalists: d.finalists },
     wheel: null,
     room: {
       ...room,

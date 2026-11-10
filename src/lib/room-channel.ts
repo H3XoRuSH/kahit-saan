@@ -43,6 +43,11 @@ export function useRoomSync(state: GameState, dispatch: Dispatch<Action>) {
   useEffect(() => {
     if (!connected || !roomCode) return;
     const sb = getSupabase();
+    for (const old of sb.getChannels()) {
+      if (old.topic === `realtime:room:${roomCode}`) {
+        sb.removeChannel(old);
+      }
+    }
     const ch = sb.channel(`room:${roomCode}`, {
       config: { broadcast: { self: false, ack: false }, presence: { key: meId } },
     });

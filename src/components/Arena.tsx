@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Dispatch } from "react";
+import { motion } from "framer-motion";
 import type { Intent, RoomState } from "@/lib/types";
 import type { Action } from "@/lib/store";
 import { strikesUsed } from "@/lib/game-logic";
@@ -42,7 +43,12 @@ export default function Arena({ room, meId, isGuest, dispatch, act }: Props) {
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col">
       {/* Sticky Jeepney Dashboard HUD */}
-      <div className="sticky top-0 z-20 border-b border-plate-border bg-milk/95 px-3.5 pb-2.5 pt-[max(0.75rem,env(safe-area-inset-top))] shadow-xs backdrop-blur-xs">
+      <motion.div
+        initial={{ opacity: 0, y: -48 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 260, damping: 22, delay: 0.76 }}
+        className="sticky top-0 z-20 border-b border-plate-border bg-milk/95 px-3.5 pb-2.5 pt-[max(0.75rem,env(safe-area-inset-top))] shadow-xs"
+      >
         <div className="mb-1.5 flex items-center justify-between font-mono text-xs font-bold uppercase text-espresso">
           <span className="truncate">{room.roomCode} · {room.category}</span>
           <span
@@ -70,13 +76,14 @@ export default function Arena({ room, meId, isGuest, dispatch, act }: Props) {
             LOCKED {lockedCount}/{players.length}
           </span>
         </div>
-      </div>
+      </motion.div>
 
       {/* Grid of Route Signboard Cards */}
       <div className="grid flex-1 auto-rows-fr grid-cols-2 content-start gap-3 p-3.5 pb-28">
-        {room.options.map((o) => (
+        {room.options.map((o, i) => (
           <FoodCard
             key={o.id}
+            index={i}
             card={o}
             limit={room.strikeLimitToBan}
             meId={meId}
@@ -89,7 +96,12 @@ export default function Arena({ room, meId, isGuest, dispatch, act }: Props) {
       </div>
 
       {/* Sticky Bottom Control Fare Box */}
-      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-[430px] flex-col gap-2 border-t border-plate-border bg-milk/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-lg backdrop-blur-xs">
+      <motion.div
+        initial={{ opacity: 0, y: 64 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 260, damping: 22, delay: 1.05 }}
+        className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-[430px] flex-col gap-2 border-t border-plate-border bg-milk/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-lg"
+      >
         <TokenDock
           options={room.options}
           meId={meId}
@@ -97,7 +109,7 @@ export default function Arena({ room, meId, isGuest, dispatch, act }: Props) {
           onPickUp={place}
           onLock={() => act({ t: "lock" })}
         />
-      </div>
+      </motion.div>
     </main>
   );
 }

@@ -27,12 +27,20 @@ export function JoinGate({
 
   useEffect(() => {
     let isMounted = true;
+    let cleaned = false;
     const sb = getSupabase();
     const ch = sb.channel(`room:${code}`, {
       config: { broadcast: { self: false, ack: false } },
     });
 
+    const cleanupChannel = () => {
+      if (cleaned) return;
+      cleaned = true;
+      sb.removeChannel(ch);
+    };
+
     const markFound = () => {
+      cleanupChannel();
       if (isMounted) setStatus("found");
     };
 
@@ -61,7 +69,7 @@ export function JoinGate({
     return () => {
       isMounted = false;
       clearTimeout(timer);
-      sb.removeChannel(ch);
+      cleanupChannel();
     };
   }, [code]);
 
@@ -234,7 +242,12 @@ export default function LobbyScreen({
       </header>
 
       {/* Terminal Boarding Pass */}
-      <div className="enamel-plate p-5 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: -52, scale: 1.07, rotate: -3.5 }}
+        animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+        transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.78 }}
+        className="enamel-plate p-5 text-center"
+      >
         <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-espresso/60">
           TERMINAL ROUTE CODE
         </div>
@@ -252,26 +265,34 @@ export default function LobbyScreen({
         >
           <Copy size={16} strokeWidth={2.5} /> {copied ? "COPIED TO CLIPBOARD ✔" : "COPY GC INVITE LINK"}
         </button>
-      </div>
+      </motion.div>
 
       {/* Route & Spots Preview */}
       {config && (
-        <div className="enamel-plate p-4">
+        <motion.div
+          initial={{ opacity: 0, y: 28, scale: 0.94 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ type: "spring", stiffness: 250, damping: 22, delay: 0.92 }}
+          className="enamel-plate p-4"
+        >
           <div className="mb-2 flex items-center justify-between border-b border-plate-border/60 pb-1.5">
             <span className="font-mono text-xs font-bold uppercase text-espresso">{config.category}</span>
             <span className="font-mono text-[10px] font-bold text-teal">{config.titles.length} SPOTS</span>
           </div>
           <div className="flex flex-wrap gap-1.5">
-            {config.titles.map((t) => (
-              <span
+            {config.titles.map((t, i) => (
+              <motion.span
                 key={t}
+                initial={{ opacity: 0, scale: 0.55, y: 10, rotate: i % 2 === 0 ? -4 : 4 }}
+                animate={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
+                transition={{ type: "spring", stiffness: 300, damping: 18, delay: 1.02 + i * 0.06 }}
                 className="rounded-lg border border-plate-border bg-milk px-2.5 py-1 font-mono text-xs font-bold text-espresso"
               >
                 {t}
-              </span>
+              </motion.span>
             ))}
           </div>
-        </div>
+        </motion.div>
       )}
 
       {/* Passenger Queue */}

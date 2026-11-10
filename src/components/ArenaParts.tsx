@@ -5,6 +5,7 @@ import type { OptionCard } from "@/lib/types";
 import { isEliminated, netStrikes } from "@/lib/game-logic";
 
 interface CardProps {
+  index: number;
   card: OptionCard;
   limit: number;
   meId: string;
@@ -14,7 +15,7 @@ interface CardProps {
   strikesFull: boolean;
 }
 
-export function FoodCard({ card, limit, meId, onStrike, onHeart, locked, strikesFull }: CardProps) {
+export function FoodCard({ index, card, limit, meId, onStrike, onHeart, locked, strikesFull }: CardProps) {
   const net = netStrikes(card);
   const banned = isEliminated(card, limit);
   const danger = !banned && net > 0;
@@ -27,7 +28,14 @@ export function FoodCard({ card, limit, meId, onStrike, onHeart, locked, strikes
     <motion.div
       layout
       key={card.id}
-      animate={{ opacity: banned ? 0.65 : 1, scale: 1 }}
+      initial={{ opacity: 0, y: 44, scale: 0.82, rotate: index % 2 === 0 ? -5 : 5 }}
+      animate={{ opacity: banned ? 0.65 : 1, y: 0, scale: 1, rotate: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 240,
+        damping: 20,
+        delay: 0.86 + Math.min(index * 0.08, 0.56),
+      }}
       className={`enamel-plate relative flex flex-col justify-between gap-2 p-3 ${bg} transition-colors`}
     >
       <div>
