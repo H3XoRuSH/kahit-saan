@@ -178,6 +178,29 @@ export function JoinGate({
   );
 }
 
+export function HostGoneScreen({ code, onLeave }: { code: string; onLeave: () => void }) {
+  return (
+    <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col justify-center gap-4 px-4">
+      <h1 className="sign-dropshadow font-extrabold text-2xl tracking-tight text-espresso">KAHIT SAAN</h1>
+      <div className="sari-paper p-6 text-center">
+        <div className="mb-2 text-4xl">🚫</div>
+        <div className="rounded-lg border border-crimson/30 bg-crimson/10 py-1.5 font-mono text-sm font-bold uppercase text-crimson">
+          ROOM CLOSED
+        </div>
+        <p className="mt-3 text-xs leading-relaxed text-espresso/80">
+          The driver has left or closed table <b>{code}</b>.
+        </p>
+      </div>
+      <button
+        onClick={onLeave}
+        className="enamel-press rounded-xl border border-mango-dark/30 bg-mango py-3 font-mono text-xs font-bold uppercase text-espresso"
+      >
+        ← Back to main menu
+      </button>
+    </main>
+  );
+}
+
 export default function LobbyScreen({
   code,
   humans,
@@ -201,26 +224,7 @@ export default function LobbyScreen({
   const total = humans.length;
 
   if (hostGone) {
-    return (
-      <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col justify-center gap-4 px-4">
-        <h1 className="sign-dropshadow font-extrabold text-2xl tracking-tight text-espresso">KAHIT SAAN</h1>
-        <div className="sari-paper p-6 text-center">
-          <div className="mb-2 text-4xl">🚫</div>
-          <div className="rounded-lg border border-crimson/30 bg-crimson/10 py-1.5 font-mono text-sm font-bold uppercase text-crimson">
-            ROOM CLOSED
-          </div>
-          <p className="mt-3 text-xs leading-relaxed text-espresso/80">
-            The driver has left or closed table <b>{code}</b>.
-          </p>
-        </div>
-        <button
-          onClick={onLeave}
-          className="enamel-press rounded-xl border border-mango-dark/30 bg-mango py-3 font-mono text-xs font-bold uppercase text-espresso"
-        >
-          ← Back to main menu
-        </button>
-      </main>
-    );
+    return <HostGoneScreen code={code} onLeave={onLeave} />;
   }
 
   const copy = async () => {

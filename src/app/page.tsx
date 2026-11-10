@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useGame } from "@/lib/store";
 import { getPlayerId, makeRoomCode } from "@/lib/identity";
 import SetupScreen from "@/components/SetupScreen";
-import LobbyScreen, { JoinGate } from "@/components/LobbyScreen";
+import LobbyScreen, { HostGoneScreen, JoinGate } from "@/components/LobbyScreen";
 import Arena from "@/components/Arena";
 import TapWar from "@/components/TapWar";
 import SpinWheel from "@/components/SpinWheel";
@@ -147,51 +147,57 @@ export default function Home() {
           exit={{ opacity: 0, transition: { duration: 0.2 } }}
           className="w-full"
         >
-          {phase === "setup" && (
-            <SetupScreen
-              nickname={state.nickname}
-              onNick={(nickname) => dispatch({ type: "SET_NICK", nickname })}
-              onCreate={createRoom}
-              onJoinCode={joinCode}
-            />
-          )}
-          {phase === "join" && roomCode && (
-            <JoinGate
-              code={roomCode}
-              nickname={state.nickname}
-              onNick={(nickname) => dispatch({ type: "SET_NICK", nickname })}
-              onJoin={() => dispatch({ type: "JOIN_ROOM", meId: getPlayerId() })}
-              onBack={leave}
-            />
-          )}
-          {phase === "lobby" && roomCode && (
-            <LobbyScreen
-              code={roomCode}
-              humans={humans}
-              config={config}
-              meId={meId}
-              isHost={role === "host"}
-              hostGone={hostGone}
-              onStart={() => config && dispatch({ type: "START", config, now: Date.now() + 1000 })}
-              onLeave={leave}
-            />
-          )}
-          {phase === "arena" && room && (
-            <Arena room={room} meId={meId} isGuest={isGuest} dispatch={dispatch} act={act} />
-          )}
-          {phase === "tapwar" && room && tap && (
-            <TapWar room={room} tap={tap} isGuest={isGuest} dispatch={dispatch} act={act} />
-          )}
-          {phase === "wheel" && room && state.wheel && (
-            <SpinWheel room={room} wheel={state.wheel} isGuest={isGuest} dispatch={dispatch} />
-          )}
-          {phase === "receipt" && room && (
-            <Receipt
-              room={room}
-              isGuest={isGuest}
-              onRematch={() => config && dispatch({ type: "START", config, now: Date.now() + 1000 })}
-              onHome={leave}
-            />
+          {hostGone && roomCode && (phase === "lobby" || phase === "arena" || phase === "tapwar" || phase === "wheel") ? (
+            <HostGoneScreen code={roomCode} onLeave={leave} />
+          ) : (
+            <>
+              {phase === "setup" && (
+                <SetupScreen
+                  nickname={state.nickname}
+                  onNick={(nickname) => dispatch({ type: "SET_NICK", nickname })}
+                  onCreate={createRoom}
+                  onJoinCode={joinCode}
+                />
+              )}
+              {phase === "join" && roomCode && (
+                <JoinGate
+                  code={roomCode}
+                  nickname={state.nickname}
+                  onNick={(nickname) => dispatch({ type: "SET_NICK", nickname })}
+                  onJoin={() => dispatch({ type: "JOIN_ROOM", meId: getPlayerId() })}
+                  onBack={leave}
+                />
+              )}
+              {phase === "lobby" && roomCode && (
+                <LobbyScreen
+                  code={roomCode}
+                  humans={humans}
+                  config={config}
+                  meId={meId}
+                  isHost={role === "host"}
+                  hostGone={hostGone}
+                  onStart={() => config && dispatch({ type: "START", config, now: Date.now() + 1000 })}
+                  onLeave={leave}
+                />
+              )}
+              {phase === "arena" && room && (
+                <Arena room={room} meId={meId} isGuest={isGuest} dispatch={dispatch} act={act} />
+              )}
+              {phase === "tapwar" && room && tap && (
+                <TapWar room={room} tap={tap} isGuest={isGuest} dispatch={dispatch} act={act} />
+              )}
+              {phase === "wheel" && room && state.wheel && (
+                <SpinWheel room={room} wheel={state.wheel} isGuest={isGuest} dispatch={dispatch} />
+              )}
+              {phase === "receipt" && room && (
+                <Receipt
+                  room={room}
+                  isGuest={isGuest}
+                  onRematch={() => config && dispatch({ type: "START", config, now: Date.now() + 1000 })}
+                  onHome={leave}
+                />
+              )}
+            </>
           )}
         </motion.div>
       </AnimatePresence>

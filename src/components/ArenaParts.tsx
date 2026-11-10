@@ -12,10 +12,9 @@ interface CardProps {
   onStrike: () => void;
   onHeart: () => void;
   locked: boolean;
-  strikesFull: boolean;
 }
 
-export function FoodCard({ index, card, limit, meId, onStrike, onHeart, locked, strikesFull }: CardProps) {
+export function FoodCard({ index, card, limit, meId, onStrike, onHeart, locked }: CardProps) {
   const net = netStrikes(card);
   const banned = isEliminated(card, limit);
   const danger = !banned && net > 0;
@@ -93,7 +92,7 @@ export function FoodCard({ index, card, limit, meId, onStrike, onHeart, locked, 
         <div className="flex gap-1.5">
           <button
             aria-pressed={myStrike}
-            disabled={locked || (!myStrike && strikesFull)}
+            disabled={locked}
             onClick={onStrike}
             className={`enamel-press flex-1 rounded-xl py-1.5 font-mono text-xs font-bold uppercase transition-all ${
               myStrike

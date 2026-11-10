@@ -96,18 +96,27 @@ export function placeToken(
   playerId: string,
   kind: TokenKind,
   optionId: string,
+  feed: FeedEvent[] = [],
 ): { options: OptionCard[]; changed: boolean } {
   const target = options.find((o) => o.id === optionId);
   if (!target) return { options, changed: false };
 
   if (kind === "strike") {
     const has = target.strikesFrom.includes(playerId);
-    if (!has && strikesUsed(options, playerId) >= MAX_STRIKES_PER_PLAYER) {
-      return { options, changed: false };
-    }
+    const lastStrikeIdx = (optId: string) =>
+      feed.findLastIndex((f) => f.type === "strike" && f.playerId === playerId && f.optionId === optId);
+    const evictId =
+      !has && strikesUsed(options, playerId) >= MAX_STRIKES_PER_PLAYER
+        ? options
+            .filter((o) => o.id !== optionId && o.strikesFrom.includes(playerId))
+            .sort((a, b) => lastStrikeIdx(a.id) - lastStrikeIdx(b.id))[0]?.id
+        : undefined;
     return {
       changed: true,
       options: options.map((o) => {
+        if (o.id === evictId) {
+          return { ...o, strikesFrom: o.strikesFrom.filter((p) => p !== playerId) };
+        }
         if (o.id !== optionId) return o;
         return {
           ...o,

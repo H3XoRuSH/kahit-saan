@@ -18,9 +18,9 @@ const SLICE_COLORS = [
   "#FFB300", // Mango
   "#00796B", // Teal
   "#D32F2F", // Crimson
-  "#1E88E5", // Blue
-  "#7B1FA2", // Purple
-  "#FB8C00", // Amber
+  "#2E7D32", // Calamansi
+  "#F57F17", // Mango Dark
+  "#004D40", // Teal Dark
 ];
 
 export default function SpinWheel({ room, wheel, isGuest, dispatch }: Props) {

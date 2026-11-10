@@ -140,7 +140,7 @@ function resolve(state: GameState, room: RoomState, now: number): GameState {
 function place(state: GameState, pid: string, kind: TokenKind, optionId: string, now: number): GameState {
   const room = state.room;
   if (!room || state.phase !== "arena" || !room.players[pid] || room.players[pid].isLockedIn) return state;
-  const res = placeToken(room.options, pid, kind, optionId);
+  const res = placeToken(room.options, pid, kind, optionId, room.feed);
   if (!res.changed) return state;
   const events = describePlacement(
     room.options,

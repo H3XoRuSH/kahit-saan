@@ -5,7 +5,6 @@ import type { Dispatch } from "react";
 import { motion } from "framer-motion";
 import type { Intent, RoomState } from "@/lib/types";
 import type { Action } from "@/lib/store";
-import { strikesUsed } from "@/lib/game-logic";
 import { nowMs } from "@/lib/clock";
 import { FoodCard, TokenDock } from "./ArenaParts";
 
@@ -88,7 +87,6 @@ export default function Arena({ room, meId, isGuest, dispatch, act }: Props) {
             limit={room.strikeLimitToBan}
             meId={meId}
             locked={locked}
-            strikesFull={strikesUsed(room.options, meId) >= 2}
             onStrike={() => place("strike", o.id)}
             onHeart={() => place("heart", o.id)}
           />
