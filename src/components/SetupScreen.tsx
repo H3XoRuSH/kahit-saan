@@ -77,14 +77,15 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
           HAVE A ROOM CODE?
         </div>
         <div className="flex gap-2">
-          <div className="enamel-plate-sm relative flex min-w-0 flex-1 items-center bg-milk focus-within:border-teal">
+          <div className="enamel-plate-sm relative flex min-w-0 flex-1 items-center bg-milk focus-within:border-teal has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-teal has-[:focus-visible]:outline-offset-2">
             <input
               value={code}
               maxLength={9}
               placeholder="TARA-XXX"
               onChange={(e) => setCode(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && codeOk && onJoinCode(normalizeCode(code))}
-              className="w-full bg-transparent px-3.5 py-2 pr-9 font-mono text-xs uppercase text-espresso outline-none placeholder:text-espresso/40"
+              style={{ outline: "none" }}
+              className="w-full bg-transparent px-3.5 py-2 pr-9 font-mono text-xs uppercase text-espresso placeholder:text-espresso/40"
             />
             <button
               type="button"
