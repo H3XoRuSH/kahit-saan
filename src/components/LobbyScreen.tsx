@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Copy, Dices, Rocket } from "lucide-react";
+import { Copy, Dices, QrCode, Rocket, X } from "lucide-react";
+import JeepneyQRCode from "@/components/JeepneyQRCode";
 import { RANDOM_NICKNAMES } from "@/lib/nicknames";
 import { useDefaultAlias } from "@/lib/identity";
 import AliasTooltip from "@/components/AliasTooltip";
@@ -221,6 +222,7 @@ export default function LobbyScreen({
   onLeave: () => void;
 }) {
   const [copied, setCopied] = useState(false);
+  const [showQr, setShowQr] = useState(false);
   const total = humans.length;
 
   if (hostGone) {
@@ -263,12 +265,20 @@ export default function LobbyScreen({
           <span className="text-[10px] font-bold font-mono">GC TICKET</span>
           <div className="h-0.5 w-12 bg-espresso/20" />
         </div>
-        <button
-          onClick={copy}
-          className="enamel-press inline-flex items-center gap-2 rounded-xl border border-mango-dark/40 bg-mango px-5 py-2.5 font-mono text-xs font-bold uppercase text-espresso shadow-xs hover:bg-amber-400"
-        >
-          <Copy size={16} strokeWidth={2.5} /> {copied ? "COPIED TO CLIPBOARD ✔" : "COPY GC INVITE LINK"}
-        </button>
+        <div className="flex items-center justify-center gap-2">
+          <button
+            onClick={copy}
+            className="enamel-press inline-flex items-center gap-2 rounded-xl border border-mango-dark/40 bg-mango px-4 py-2.5 font-mono text-xs font-bold uppercase text-espresso shadow-xs hover:bg-amber-400"
+          >
+            <Copy size={16} strokeWidth={2.5} /> {copied ? "COPIED ✔" : "COPY LINK"}
+          </button>
+          <button
+            onClick={() => setShowQr(true)}
+            className="enamel-press inline-flex items-center gap-2 rounded-xl border border-teal-dark bg-teal px-4 py-2.5 font-mono text-xs font-bold uppercase text-white shadow-xs hover:bg-teal-dark"
+          >
+            <QrCode size={16} strokeWidth={2.5} /> QR CODE
+          </button>
+        </div>
       </motion.div>
 
       {/* Route & Spots Preview */}
@@ -359,6 +369,39 @@ export default function LobbyScreen({
       >
         ← Leave Jeepney
       </button>
+
+      {showQr && (
+        <div
+          onClick={() => setShowQr(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-espresso/60 p-4 backdrop-blur-xs"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="enamel-plate flex w-full max-w-[320px] flex-col items-center gap-3 p-5 text-center shadow-2xl"
+          >
+            <div className="flex w-full items-center justify-between border-b border-plate-border/60 pb-2">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-espresso/70">
+                SCAN TO SAKAY · {code}
+              </span>
+              <button
+                onClick={() => setShowQr(false)}
+                className="rounded-lg p-1 text-espresso/60 hover:bg-espresso/10 hover:text-espresso"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <div className="overflow-hidden rounded-2xl border border-plate-border bg-milk p-3 shadow-inner">
+              <JeepneyQRCode
+                url={typeof window !== "undefined" ? `${window.location.origin}/?room=${code}` : `?room=${code}`}
+                size={210}
+              />
+            </div>
+            <p className="font-mono text-xs font-medium text-espresso/80">
+              Point phone camera to join table directly
+            </p>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

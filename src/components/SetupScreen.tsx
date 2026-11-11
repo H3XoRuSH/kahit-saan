@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Dices, Plus, X } from "lucide-react";
+import { Dices, Plus, ScanQrCode, X } from "lucide-react";
+import QRScannerModal from "@/components/QRScannerModal";
 import { PRESETS } from "@/lib/presets";
 import { RANDOM_NICKNAMES } from "@/lib/nicknames";
 import { useDefaultAlias } from "@/lib/identity";
@@ -27,6 +28,7 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
   const [options, setOptions] = useState<string[]>(PRESETS[0].options);
   const [duration, setDuration] = useState(45);
   const [code, setCode] = useState("");
+  const [showScanner, setShowScanner] = useState(false);
   const defaultAlias = useDefaultAlias();
 
   const preset = PRESETS.find((p) => p.id === presetId)!;
@@ -75,14 +77,24 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
           HAVE A ROOM CODE?
         </div>
         <div className="flex gap-2">
-          <input
-            value={code}
-            maxLength={9}
-            placeholder="TARA-XXX"
-            onChange={(e) => setCode(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && codeOk && onJoinCode(normalizeCode(code))}
-            className="enamel-plate-sm min-w-0 flex-1 bg-milk px-3.5 py-2 font-mono text-xs uppercase text-espresso outline-none placeholder:text-espresso/40 focus:border-teal"
-          />
+          <div className="enamel-plate-sm relative flex min-w-0 flex-1 items-center bg-milk focus-within:border-teal">
+            <input
+              value={code}
+              maxLength={9}
+              placeholder="TARA-XXX"
+              onChange={(e) => setCode(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && codeOk && onJoinCode(normalizeCode(code))}
+              className="w-full bg-transparent px-3.5 py-2 pr-9 font-mono text-xs uppercase text-espresso outline-none placeholder:text-espresso/40"
+            />
+            <button
+              type="button"
+              onClick={() => setShowScanner(true)}
+              title="Scan QR Code"
+              className="absolute right-2 flex h-6 w-6 items-center justify-center rounded-md text-espresso/60 transition-colors hover:bg-espresso/10 hover:text-espresso"
+            >
+              <ScanQrCode size={16} strokeWidth={2.2} />
+            </button>
+          </div>
           <button
             disabled={!codeOk}
             onClick={() => onJoinCode(normalizeCode(code))}
@@ -91,6 +103,14 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
             Join
           </button>
         </div>
+        <QRScannerModal
+          isOpen={showScanner}
+          onClose={() => setShowScanner(false)}
+          onScan={(scannedCode) => {
+            setCode(scannedCode);
+            onJoinCode(scannedCode);
+          }}
+        />
       </section>
 
       {/* Main Order Clipboard Body */}
