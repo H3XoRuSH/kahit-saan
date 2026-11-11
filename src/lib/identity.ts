@@ -20,7 +20,7 @@ const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 export function makeRoomCode(): string {
   let s = "";
   for (let i = 0; i < 3; i++) s += CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)];
-  return `KAIN-${s}`;
+  return `TARA-${s}`;
 }
 
 const AVATARS = ["😎", "🤠", "🥳", "😈", "🤖", "👻", "🦁", "🐻", "🐵", "🦉", "🐲", "🍕"];

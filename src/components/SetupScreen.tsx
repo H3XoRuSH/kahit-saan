@@ -16,10 +16,10 @@ interface Props {
   onJoinCode: (code: string) => void;
 }
 
-/** Accepts "KAIN-XXX", "kain-xxx" or just "xxx". */
+/** Accepts "TARA-XXX", "KAIN-XXX", or just "xxx". */
 function normalizeCode(raw: string): string {
-  const s = raw.trim().toUpperCase().replace(/^KAIN-?/, "").replace(/[^A-Z0-9]/g, "");
-  return `KAIN-${s}`;
+  const s = raw.trim().toUpperCase().replace(/^(TARA|KAIN)-?/, "").replace(/[^A-Z0-9]/g, "");
+  return `TARA-${s}`;
 }
 
 export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: Props) {
@@ -78,7 +78,7 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
           <input
             value={code}
             maxLength={9}
-            placeholder="KAIN-XXX"
+            placeholder="TARA-XXX"
             onChange={(e) => setCode(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && codeOk && onJoinCode(normalizeCode(code))}
             className="enamel-plate-sm min-w-0 flex-1 bg-milk px-3.5 py-2 font-mono text-xs uppercase text-espresso outline-none placeholder:text-espresso/40 focus:border-teal"
