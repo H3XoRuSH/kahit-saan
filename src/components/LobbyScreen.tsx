@@ -142,7 +142,7 @@ export function JoinGate({
             <input
               value={nickname}
               maxLength={20}
-              placeholder={defaultAlias ? `e.g. ${defaultAlias}` : "Your nickname"}
+              placeholder={defaultAlias || "Your nickname"}
               title={`You will be introduced as ${defaultAlias} if no alias is entered`}
               onChange={(e) => onNick(e.target.value)}
               className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-xs text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
@@ -154,11 +154,6 @@ export function JoinGate({
               <Dices size={16} strokeWidth={2.5} /> Roll
             </button>
           </div>
-          {!nickname.trim() && defaultAlias && (
-            <p className="mt-1.5 font-mono text-[11px] text-espresso/60">
-              Entering as <span className="font-bold text-espresso">{defaultAlias}</span>
-            </p>
-          )}
         </div>
 
         <button

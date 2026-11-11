@@ -124,7 +124,7 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
           <div className="flex gap-2">
             <input
               value={nickname}
-              placeholder={defaultAlias ? `e.g. ${defaultAlias}` : "Your nickname"}
+              placeholder={defaultAlias || "Your nickname"}
               title={`You will be introduced as ${defaultAlias} if no alias is entered`}
               maxLength={20}
               onChange={(e) => onNick(e.target.value)}
@@ -137,11 +137,6 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
               <Dices size={16} strokeWidth={2.5} /> Roll
             </button>
           </div>
-          {!nickname.trim() && defaultAlias && (
-            <p className="mt-1.5 font-mono text-[11px] text-espresso/60">
-              Entering as <span className="font-bold text-espresso">{defaultAlias}</span>
-            </p>
-          )}
         </section>
 
         <div className="border-t border-plate-border/60" />
