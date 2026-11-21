@@ -294,10 +294,10 @@ export function useGame() {
   const send = useRoomSync(state, dispatch);
   const { role, meId } = state;
 
-  /** Player intents: guests send to the host; the host applies locally. */
+  /** Player intents: apply locally right away (optimistic for guests) and send to host. */
   const act = useCallback(
     (i: Intent) => {
-      if (role === "guest") return send(i);
+      if (role === "guest") send(i);
       const now = Date.now();
       if (i.t === "place") dispatch({ type: "PLACE", kind: i.kind, optionId: i.optionId, now });
       else if (i.t === "lock") dispatch({ type: "TOGGLE_LOCK", playerId: meId, now });
