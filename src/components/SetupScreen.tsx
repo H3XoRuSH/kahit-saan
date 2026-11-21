@@ -51,137 +51,141 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
   };
 
   return (
-    <main className="mx-auto flex w-full max-w-[430px] flex-col gap-4.5 px-4 pb-32 pt-5">
-      <header className="flex items-center gap-3.5 pt-2">
-        <Image
-          src="/icons/main-menu-icon.png"
-          alt="Kahit Saan"
-          width={76}
-          height={76}
-          className="h-19 w-19 shrink-0 rounded-2xl object-contain"
-          priority
-        />
-        <div className="min-w-0 flex-1">
-          <h1 className="sign-dropshadow font-extrabold text-2xl sm:text-3xl leading-none tracking-tight text-espresso">
-            KAHIT SAAN
-          </h1>
-          <p className="mt-1.5 text-xs font-semibold leading-snug text-espresso/80">
-            Stop asking &quot;Kahit Saan&quot;. Ekis what you hate, kain what survives.
-          </p>
-        </div>
-      </header>
-
-      {/* Quick Join Stamped Voucher */}
-      <section className="enamel-plate p-3.5">
-        <div className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
-          HAVE A ROOM CODE?
-        </div>
-        <div className="flex gap-2">
-          <div className="enamel-plate-sm relative flex min-w-0 flex-1 items-center bg-milk focus-within:border-teal has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-teal has-[:focus-visible]:outline-offset-2">
-            <input
-              value={code}
-              maxLength={9}
-              placeholder="TARA-XXX"
-              onChange={(e) => setCode(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && codeOk && onJoinCode(normalizeCode(code))}
-              style={{ outline: "none" }}
-              className="w-full bg-transparent px-3.5 py-2 pr-9 font-mono text-xs uppercase text-espresso placeholder:text-espresso/40"
-            />
-            <button
-              type="button"
-              onClick={() => setShowScanner(true)}
-              title="Scan QR Code"
-              className="absolute right-2 flex h-6 w-6 items-center justify-center rounded-md text-espresso/60 transition-colors hover:bg-espresso/10 hover:text-espresso"
-            >
-              <ScanQrCode size={16} strokeWidth={2.2} />
-            </button>
+    <main className="mx-auto flex w-full max-w-[430px] flex-col gap-4.5 px-4 pb-32 pt-5 md:grid md:min-h-dvh md:max-w-4xl md:grid-cols-12 md:content-center md:items-start md:gap-6 md:px-6 md:py-8 lg:max-w-5xl">
+      {/* Left Wing: Brand Header, Quick Join, Alias & Category */}
+      <div className="flex flex-col gap-4.5 md:col-span-5">
+        <header className="flex items-center gap-3.5 pt-2 md:pt-0">
+          <Image
+            src="/icons/main-menu-icon.png"
+            alt="Kahit Saan"
+            width={76}
+            height={76}
+            className="h-19 w-19 shrink-0 rounded-2xl object-contain"
+            priority
+          />
+          <div className="min-w-0 flex-1">
+            <h1 className="sign-dropshadow font-extrabold text-2xl sm:text-3xl leading-none tracking-tight text-espresso">
+              KAHIT SAAN
+            </h1>
+            <p className="mt-1.5 text-xs font-semibold leading-snug text-espresso/80">
+              Stop asking &quot;Kahit Saan&quot;. Ekis what you hate, kain what survives.
+            </p>
           </div>
-          <button
-            disabled={!codeOk}
-            onClick={() => onJoinCode(normalizeCode(code))}
-            className="enamel-press rounded-xl bg-teal px-5 font-mono text-xs font-bold uppercase text-white shadow-xs disabled:bg-tin disabled:text-espresso/40"
-          >
-            Join
-          </button>
-        </div>
-        <QRScannerModal
-          isOpen={showScanner}
-          onClose={() => setShowScanner(false)}
-          onScan={(scannedCode) => {
-            setCode(scannedCode);
-            onJoinCode(scannedCode);
-          }}
-        />
-      </section>
+        </header>
 
-      {/* Main Order Clipboard Body */}
-      <div className="sari-paper flex flex-col gap-4.5 p-4.5">
-        {/* Step 1: Host Nickname */}
-        <section>
-          <div className="mb-2 flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
-            <span>1 · YOUR BARKADA ALIAS</span>
-            <AliasTooltip defaultAlias={defaultAlias} />
+        {/* Quick Join Stamped Voucher */}
+        <section className="enamel-plate p-3.5 md:p-4">
+          <div className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
+            HAVE A ROOM CODE?
           </div>
           <div className="flex gap-2">
-            <input
-              value={nickname}
-              placeholder={defaultAlias || "Your nickname"}
-              title={`You will be introduced as ${defaultAlias} if no alias is entered`}
-              maxLength={20}
-              onChange={(e) => onNick(e.target.value)}
-              className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-xs text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
-            />
+            <div className="enamel-plate-sm relative flex min-w-0 flex-1 items-center bg-milk focus-within:border-teal has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-teal has-[:focus-visible]:outline-offset-2">
+              <input
+                value={code}
+                maxLength={9}
+                placeholder="TARA-XXX"
+                onChange={(e) => setCode(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && codeOk && onJoinCode(normalizeCode(code))}
+                style={{ outline: "none" }}
+                className="w-full bg-transparent px-3.5 py-2 md:py-2.5 pr-9 font-mono text-xs md:text-sm uppercase text-espresso placeholder:text-espresso/40"
+              />
+              <button
+                type="button"
+                onClick={() => setShowScanner(true)}
+                title="Scan QR Code"
+                className="absolute right-2 flex h-6 w-6 items-center justify-center rounded-md text-espresso/60 transition-colors hover:bg-espresso/10 hover:text-espresso"
+              >
+                <ScanQrCode size={16} strokeWidth={2.2} />
+              </button>
+            </div>
             <button
-              onClick={() => onNick(RANDOM_NICKNAMES[Math.floor(Math.random() * RANDOM_NICKNAMES.length)])}
-              className="enamel-press flex items-center gap-1.5 rounded-xl border border-mango-dark/40 bg-mango px-3.5 font-mono text-xs font-bold uppercase text-espresso shadow-xs"
+              disabled={!codeOk}
+              onClick={() => onJoinCode(normalizeCode(code))}
+              className="enamel-press rounded-xl bg-teal px-5 font-mono text-xs md:text-sm font-bold uppercase text-white shadow-xs disabled:bg-tin disabled:text-espresso/40"
             >
-              <Dices size={16} strokeWidth={2.5} /> Roll
+              Join
             </button>
           </div>
+          <QRScannerModal
+            isOpen={showScanner}
+            onClose={() => setShowScanner(false)}
+            onScan={(scannedCode) => {
+              setCode(scannedCode);
+              onJoinCode(scannedCode);
+            }}
+          />
         </section>
 
-        <div className="border-t border-plate-border/60" />
+        {/* Identity & Category Configuration */}
+        <div className="sari-paper flex flex-col gap-4.5 p-4.5 md:p-5">
+          {/* Step 1: Host Nickname */}
+          <section>
+            <div className="mb-2 flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
+              <span>1 · YOUR BARKADA ALIAS</span>
+              <AliasTooltip defaultAlias={defaultAlias} />
+            </div>
+            <div className="flex gap-2">
+              <input
+                value={nickname}
+                placeholder={defaultAlias || "Your nickname"}
+                title={`You will be introduced as ${defaultAlias} if no alias is entered`}
+                maxLength={20}
+                onChange={(e) => onNick(e.target.value)}
+                className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 md:py-2.5 text-xs md:text-sm text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
+              />
+              <button
+                onClick={() => onNick(RANDOM_NICKNAMES[Math.floor(Math.random() * RANDOM_NICKNAMES.length)])}
+                className="enamel-press flex items-center gap-1.5 rounded-xl border border-mango-dark/40 bg-mango px-3.5 font-mono text-xs font-bold uppercase text-espresso shadow-xs"
+              >
+                <Dices size={16} strokeWidth={2.5} /> Roll
+              </button>
+            </div>
+          </section>
 
-        {/* Step 2: Decision Category Routes */}
-        <section>
-          <div className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
-            2 · PICK CATEGORY
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            {PRESETS.map((p) => {
-              const active = p.id === presetId;
-              return (
-                <button
-                  key={p.id}
-                  onClick={() => pick(p.id)}
-                  className={`enamel-press flex items-center gap-2 rounded-xl px-3 py-2.5 text-left text-xs font-bold transition-all ${
-                    active
-                      ? "border border-teal-dark bg-teal text-white shadow-sm"
-                      : "border border-plate-border bg-white text-espresso hover:border-espresso/30"
-                  }`}
-                >
-                  <span className="text-base">{p.emoji}</span>
-                  <span className="truncate">{p.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </section>
+          <div className="border-t border-plate-border/60" />
 
-        <div className="border-t border-plate-border/60" />
+          {/* Step 2: Decision Category Routes */}
+          <section>
+            <div className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
+              2 · PICK CATEGORY
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {PRESETS.map((p) => {
+                const active = p.id === presetId;
+                return (
+                  <button
+                    key={p.id}
+                    onClick={() => pick(p.id)}
+                    className={`enamel-press flex items-center gap-2 rounded-xl px-3 py-2.5 md:py-3 text-left text-xs font-bold transition-all ${
+                      active
+                        ? "border border-teal-dark bg-teal text-white shadow-sm"
+                        : "border border-plate-border bg-white text-espresso hover:border-espresso/30"
+                    }`}
+                  >
+                    <span className="text-base">{p.emoji}</span>
+                    <span className="truncate">{p.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        </div>
+      </div>
 
+      {/* Right Stage: Route Spots, Timer & Boarding Trigger */}
+      <div className="sari-paper flex flex-col gap-5 p-4.5 md:col-span-7 md:p-5">
         {/* Step 3: Route Stops / Contenders */}
         <section>
-          <div className="mb-2 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-espresso">
+          <div className="mb-2.5 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-espresso">
             <span>3 · ROUTE SPOTS</span>
             <span className="rounded border border-plate-border bg-white px-1.5 py-0.5 font-mono text-[10px] font-bold text-espresso">
               {clean.length}/8
             </span>
           </div>
-          <ul className="flex flex-col gap-2">
+          <ul className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-2.5">
             {options.map((o, i) => (
               <li key={i} className="flex gap-1.5">
-                <span className="flex w-8 shrink-0 items-center justify-center rounded-lg border border-plate-border bg-white font-mono text-xs font-bold text-teal">
+                <span className="flex w-8 md:w-9 shrink-0 items-center justify-center rounded-lg border border-plate-border bg-white font-mono text-xs font-bold text-teal">
                   0{i + 1}
                 </span>
                 <input
@@ -189,7 +193,7 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
                   maxLength={24}
                   placeholder={`Spot #${i + 1}`}
                   onChange={(e) => setOptions(options.map((x, j) => (j === i ? e.target.value : x)))}
-                  className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-xs text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
+                  className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 md:py-2.5 text-xs md:text-sm text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
                 />
                 <button
                   aria-label="Remove"
@@ -205,7 +209,7 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
           {options.length < 8 && (
             <button
               onClick={() => setOptions([...options, ""])}
-              className="enamel-press mt-2 flex w-full items-center justify-center gap-2 rounded-xl border border-calamansi/30 bg-calamansi/10 px-4 py-2.5 font-mono text-xs font-bold uppercase text-calamansi hover:bg-calamansi/20"
+              className="enamel-press mt-2.5 flex w-full items-center justify-center gap-2 rounded-xl border border-calamansi/30 bg-calamansi/10 px-4 py-2.5 font-mono text-xs font-bold uppercase text-calamansi hover:bg-calamansi/20"
             >
               <Plus size={16} strokeWidth={2.5} /> ADD SPOT (+1)
             </button>
@@ -217,40 +221,42 @@ export default function SetupScreen({ nickname, onNick, onCreate, onJoinCode }: 
           )}
         </section>
 
-        <div className="border-t border-plate-border/60" />
+        <div className="flex flex-col gap-4.5">
+          <div className="border-t border-plate-border/60" />
 
-        {/* Step 4: Round Timer */}
-        <section>
-          <div className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
-            4 · ROUND TIMER
-          </div>
-          <div className="grid grid-cols-3 gap-2">
-            {[30, 45, 60].map((s) => (
-              <button
-                key={s}
-                onClick={() => setDuration(s)}
-                className={`enamel-press rounded-xl py-2 font-mono text-sm font-bold uppercase transition-all ${
-                  duration === s
-                    ? "border border-espresso bg-espresso text-milk shadow-xs"
-                    : "border border-plate-border bg-white text-espresso"
-                }`}
-              >
-                {s}s
-              </button>
-            ))}
-          </div>
-        </section>
-      </div>
+          {/* Step 4: Round Timer */}
+          <section>
+            <div className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-espresso">
+              4 · ROUND TIMER
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              {[30, 45, 60].map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setDuration(s)}
+                  className={`enamel-press rounded-xl py-2.5 md:py-3 font-mono text-sm font-bold uppercase transition-all ${
+                    duration === s
+                      ? "border border-espresso bg-espresso text-milk shadow-xs"
+                      : "border border-plate-border bg-white text-espresso hover:border-espresso/30"
+                  }`}
+                >
+                  {s}s
+                </button>
+              ))}
+            </div>
+          </section>
 
-      {/* Sticky Bottom Boarding Trigger */}
-      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-[430px] border-t border-plate-border bg-milk px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 shadow-md">
-        <button
-          disabled={!valid}
-          onClick={() => onCreate(cfg())}
-          className="enamel-press flex w-full items-center justify-center gap-2 rounded-2xl border border-teal-dark bg-teal py-4 font-mono text-base font-bold tracking-wider text-white shadow-md hover:bg-teal-dark disabled:bg-tin disabled:text-espresso/40"
-        >
-          CREATE ROOM &amp; GET LINK
-        </button>
+          {/* Sticky Bottom on Mobile, Static Inline on PC/Tablet */}
+          <div className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-[430px] border-t border-plate-border bg-milk px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 shadow-md md:static md:mx-0 md:max-w-none md:border-t-0 md:bg-transparent md:p-0 md:shadow-none">
+            <button
+              disabled={!valid}
+              onClick={() => onCreate(cfg())}
+              className="enamel-press flex w-full items-center justify-center gap-2 rounded-2xl border border-teal-dark bg-teal py-4 font-mono text-base font-bold tracking-wider text-white shadow-md hover:bg-teal-dark disabled:bg-tin disabled:text-espresso/40"
+            >
+              CREATE ROOM &amp; GET LINK
+            </button>
+          </div>
+        </div>
       </div>
     </main>
   );

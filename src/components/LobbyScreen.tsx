@@ -76,10 +76,10 @@ export function JoinGate({
 
   if (status === "checking") {
     return (
-      <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col justify-center gap-4 px-4">
+      <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col justify-center gap-4 px-4 md:h-dvh md:max-w-xl md:overflow-hidden">
         <h1 className="sign-dropshadow font-extrabold text-2xl tracking-tight text-espresso">KAHIT SAAN</h1>
-        <div className="sari-paper p-6 text-center">
-          <div className="font-mono text-sm font-bold tracking-wider text-teal animate-pulse">
+        <div className="sari-paper p-6 md:p-8 text-center">
+          <div className="font-mono text-sm md:text-base font-bold tracking-wider text-teal animate-pulse">
             CHECKING TERMINAL [{code}]…
           </div>
           <div className="mt-2 text-xs text-espresso/70">Pinging active driver via Supabase</div>
@@ -96,9 +96,9 @@ export function JoinGate({
 
   if (status === "not_found") {
     return (
-      <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col justify-center gap-4 px-4">
+      <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col justify-center gap-4 px-4 md:h-dvh md:max-w-xl md:overflow-hidden">
         <h1 className="sign-dropshadow font-extrabold text-2xl tracking-tight text-espresso">KAHIT SAAN</h1>
-        <div className="sari-paper p-6 text-center">
+        <div className="sari-paper p-6 md:p-8 text-center">
           <div className="mb-2 text-4xl">🚫</div>
           <div className="rounded-lg border border-crimson/30 bg-crimson/10 py-1.5 font-mono text-sm font-bold uppercase text-crimson">
             ROOM NOT FOUND
@@ -118,55 +118,64 @@ export function JoinGate({
   }
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col justify-center gap-4 px-4">
+    <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col justify-center gap-4 px-4 md:h-dvh md:max-w-2xl md:overflow-hidden md:px-6">
       <div className="enamel-plate-sm inline-block self-start border-mango-dark/30 bg-mango px-3.5 py-1">
         <h1 className="sign-dropshadow font-extrabold text-2xl tracking-tight text-espresso">KAHIT SAAN</h1>
       </div>
-      <div className="sari-paper flex flex-col gap-4 p-5">
-        <div className="flex items-center justify-between border-b border-plate-border/60 pb-3">
+
+      {/* Horizontal 2-Part Boarding Ticket on PC/Tablet */}
+      <div className="sari-paper flex flex-col gap-4 p-5 md:grid md:grid-cols-12 md:gap-0 md:p-0">
+        {/* Ticket Stub Left (md:col-span-5) */}
+        <div className="flex items-center justify-between border-b border-plate-border/60 pb-3 md:col-span-5 md:flex-col md:items-start md:justify-between md:rounded-l-[12.5px] md:border-b-0 md:border-r md:border-dashed md:border-espresso/25 md:bg-mango/25 md:p-6">
           <div>
             <div className="font-mono text-[10px] font-bold uppercase text-espresso/60">BOARDING PASS</div>
-            <div className="font-mono text-xl font-bold tracking-wider text-espresso">{code}</div>
+            <div className="font-mono text-xl md:text-3xl font-extrabold tracking-wider text-espresso md:mt-1">
+              {code}
+            </div>
           </div>
           <span className="rounded-md border border-calamansi/30 bg-calamansi/10 px-2 py-0.5 font-mono text-xs font-bold text-calamansi">
             ROUTE ACTIVE
           </span>
         </div>
 
-        <div>
-          <div className="mb-1.5 flex items-center gap-1.5 font-mono text-xs font-bold uppercase text-espresso">
-            <span>YOUR BARKADA ALIAS</span>
-            <AliasTooltip defaultAlias={defaultAlias} />
+        {/* Ticket Body Right (md:col-span-7) */}
+        <div className="flex flex-col gap-4 md:col-span-7 md:justify-between md:p-6">
+          <div>
+            <div className="mb-1.5 flex items-center gap-1.5 font-mono text-xs font-bold uppercase text-espresso">
+              <span>YOUR BARKADA ALIAS</span>
+              <AliasTooltip defaultAlias={defaultAlias} />
+            </div>
+            <div className="flex gap-2">
+              <input
+                value={nickname}
+                maxLength={20}
+                placeholder={defaultAlias || "Your nickname"}
+                title={`You will be introduced as ${defaultAlias} if no alias is entered`}
+                onChange={(e) => onNick(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && onJoin()}
+                className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-xs text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
+              />
+              <button
+                onClick={() => onNick(RANDOM_NICKNAMES[Math.floor(Math.random() * RANDOM_NICKNAMES.length)])}
+                className="enamel-press flex items-center gap-1.5 rounded-xl border border-mango-dark/40 bg-mango px-3.5 font-mono text-xs font-bold uppercase text-espresso"
+              >
+                <Dices size={16} strokeWidth={2.5} /> Roll
+              </button>
+            </div>
           </div>
-          <div className="flex gap-2">
-            <input
-              value={nickname}
-              maxLength={20}
-              placeholder={defaultAlias || "Your nickname"}
-              title={`You will be introduced as ${defaultAlias} if no alias is entered`}
-              onChange={(e) => onNick(e.target.value)}
-              className="enamel-plate-sm min-w-0 flex-1 bg-white px-3 py-2 text-xs text-espresso outline-none placeholder:text-espresso/30 focus:border-teal"
-            />
-            <button
-              onClick={() => onNick(RANDOM_NICKNAMES[Math.floor(Math.random() * RANDOM_NICKNAMES.length)])}
-              className="enamel-press flex items-center gap-1.5 rounded-xl border border-mango-dark/40 bg-mango px-3.5 font-mono text-xs font-bold uppercase text-espresso"
-            >
-              <Dices size={16} strokeWidth={2.5} /> Roll
-            </button>
-          </div>
-        </div>
 
-        <button
-          onClick={onJoin}
-          className="enamel-press rounded-2xl border border-teal-dark bg-teal py-4 font-mono text-base font-bold tracking-wider text-white shadow-md hover:bg-teal-dark"
-        >
-          JOIN THE PURGE
-        </button>
+          <button
+            onClick={onJoin}
+            className="enamel-press rounded-2xl border border-teal-dark bg-teal py-4 font-mono text-base font-bold tracking-wider text-white shadow-md hover:bg-teal-dark"
+          >
+            JOIN THE PURGE
+          </button>
+        </div>
       </div>
 
       <button
         onClick={onBack}
-        className="enamel-press rounded-xl border border-plate-border bg-white py-2.5 font-mono text-xs font-bold uppercase text-espresso"
+        className="enamel-press rounded-xl border border-plate-border bg-white py-2.5 font-mono text-xs font-bold uppercase text-espresso md:self-start md:px-6"
       >
         ← Back to main menu
       </button>
@@ -176,9 +185,9 @@ export function JoinGate({
 
 export function HostGoneScreen({ code, onLeave }: { code: string; onLeave: () => void }) {
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col justify-center gap-4 px-4">
+    <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col justify-center gap-4 px-4 md:h-dvh md:max-w-xl md:overflow-hidden">
       <h1 className="sign-dropshadow font-extrabold text-2xl tracking-tight text-espresso">KAHIT SAAN</h1>
-      <div className="sari-paper p-6 text-center">
+      <div className="sari-paper p-6 md:p-8 text-center">
         <div className="mb-2 text-4xl">🚫</div>
         <div className="rounded-lg border border-crimson/30 bg-crimson/10 py-1.5 font-mono text-sm font-bold uppercase text-crimson">
           ROOM CLOSED
@@ -224,6 +233,8 @@ export default function LobbyScreen({
     return <HostGoneScreen code={code} onLeave={onLeave} />;
   }
 
+  const joinUrl = typeof window !== "undefined" ? `${window.location.origin}/?room=${code}` : `?room=${code}`;
+
   const copy = async () => {
     const url = `${window.location.origin}/?room=${code}`;
     try {
@@ -236,134 +247,164 @@ export default function LobbyScreen({
   };
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col gap-4 px-4 pb-8 pt-5">
-      <header className="flex items-center justify-between pt-1">
-        <h1 className="sign-dropshadow font-extrabold text-2xl tracking-tight text-espresso">KAHIT SAAN</h1>
-        <span className="font-mono text-xs font-bold text-espresso/60 uppercase">LOBBY</span>
+    <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col gap-4 px-4 pb-8 pt-5 md:max-w-4xl md:justify-center md:px-6 md:py-8 lg:max-w-5xl">
+      <header className="flex items-center justify-between pt-1 md:pt-0">
+        <div className="flex items-center gap-3">
+          <h1 className="sign-dropshadow font-extrabold text-2xl tracking-tight text-espresso">KAHIT SAAN</h1>
+          <span className="rounded-md border border-plate-border bg-white px-2 py-0.5 font-mono text-xs font-bold text-espresso/70 uppercase">
+            LOBBY
+          </span>
+        </div>
+        <button
+          onClick={onLeave}
+          className="hidden md:inline-flex enamel-press rounded-xl border border-plate-border bg-white px-3.5 py-1.5 font-mono text-xs font-bold text-espresso/80 hover:border-espresso/30 hover:text-espresso"
+        >
+          ← Leave Jeepney
+        </button>
       </header>
 
-      {/* Terminal Boarding Pass */}
-      <motion.div
-        initial={{ opacity: 0, y: -52, scale: 1.07, rotate: -3.5 }}
-        animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.78 }}
-        className="enamel-plate p-5 text-center"
-      >
-        <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-espresso/60">
-          TERMINAL ROUTE CODE
-        </div>
-        <div className="sign-dropshadow my-1 font-mono text-4xl font-extrabold tracking-widest text-espresso">
-          {code}
-        </div>
-        <div className="my-2 flex items-center justify-center gap-1 text-espresso/30">
-          <div className="h-0.5 w-12 bg-espresso/20" />
-          <span className="text-[10px] font-bold font-mono">GC TICKET</span>
-          <div className="h-0.5 w-12 bg-espresso/20" />
-        </div>
-        <div className="flex items-center justify-center gap-2">
-          <button
-            onClick={copy}
-            className="enamel-press inline-flex items-center gap-2 rounded-xl border border-mango-dark/40 bg-mango px-4 py-2.5 font-mono text-xs font-bold uppercase text-espresso shadow-xs hover:bg-amber-400"
+      <div className="flex flex-1 flex-col gap-4 md:grid md:flex-initial md:grid-cols-12 md:items-start md:gap-6">
+        {/* Left Wing: Terminal Boarding Pass, Inline Desktop QR & Route Preview */}
+        <div className="flex flex-col gap-4 md:col-span-5">
+          {/* Terminal Boarding Pass */}
+          <motion.div
+            initial={{ opacity: 0, y: -52, scale: 1.07, rotate: -3.5 }}
+            animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.78 }}
+            className="enamel-plate flex flex-col items-center p-5 text-center"
           >
-            <Copy size={16} strokeWidth={2.5} /> {copied ? "COPIED ✔" : "COPY LINK"}
-          </button>
-          <button
-            onClick={() => setShowQr(true)}
-            className="enamel-press inline-flex items-center gap-2 rounded-xl border border-teal-dark bg-teal px-4 py-2.5 font-mono text-xs font-bold uppercase text-white shadow-xs hover:bg-teal-dark"
-          >
-            <QrCode size={16} strokeWidth={2.5} /> QR CODE
-          </button>
-        </div>
-      </motion.div>
+            <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-espresso/60">
+              TERMINAL ROUTE CODE
+            </div>
+            <div className="sign-dropshadow my-1 font-mono text-4xl font-extrabold tracking-widest text-espresso">
+              {code}
+            </div>
 
-      {/* Route & Spots Preview */}
-      {config && (
-        <motion.div
-          initial={{ opacity: 0, y: 28, scale: 0.94 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ type: "spring", stiffness: 250, damping: 22, delay: 0.92 }}
-          className="enamel-plate p-4"
-        >
-          <div className="mb-2 flex items-center justify-between border-b border-plate-border/60 pb-1.5">
-            <span className="font-mono text-xs font-bold uppercase text-espresso">{config.category}</span>
-            <span className="font-mono text-[10px] font-bold text-teal">{config.titles.length} SPOTS</span>
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {config.titles.map((t, i) => (
-              <motion.span
-                key={t}
-                initial={{ opacity: 0, scale: 0.55, y: 10, rotate: i % 2 === 0 ? -4 : 4 }}
-                animate={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
-                transition={{ type: "spring", stiffness: 300, damping: 18, delay: 1.02 + i * 0.06 }}
-                className="rounded-lg border border-plate-border bg-milk px-2.5 py-1 font-mono text-xs font-bold text-espresso"
+            {/* Always-visible QR on PC/Tablet so friends can scan screen directly */}
+            <div className="my-2.5 hidden md:flex flex-col items-center gap-1.5">
+              <div className="overflow-hidden rounded-2xl border border-plate-border bg-milk p-2.5 shadow-inner">
+                <JeepneyQRCode url={joinUrl} size={148} />
+              </div>
+              <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-espresso/60">
+                SCAN WITH PHONE TO SAKAY
+              </span>
+            </div>
+
+            <div className="my-2 flex items-center justify-center gap-1 text-espresso/30 md:my-1.5">
+              <div className="h-0.5 w-12 bg-espresso/20" />
+              <span className="text-[10px] font-bold font-mono">GC TICKET</span>
+              <div className="h-0.5 w-12 bg-espresso/20" />
+            </div>
+            <div className="flex w-full items-center justify-center gap-2">
+              <button
+                onClick={copy}
+                className="enamel-press inline-flex flex-1 md:flex-initial items-center justify-center gap-2 rounded-xl border border-mango-dark/40 bg-mango px-4 py-2.5 font-mono text-xs font-bold uppercase text-espresso shadow-xs hover:bg-amber-400"
               >
-                {t}
-              </motion.span>
-            ))}
-          </div>
-        </motion.div>
-      )}
+                <Copy size={16} strokeWidth={2.5} /> {copied ? "COPIED ✔" : "COPY LINK"}
+              </button>
+              <button
+                onClick={() => setShowQr(true)}
+                className="enamel-press inline-flex items-center justify-center gap-2 rounded-xl border border-teal-dark bg-teal px-4 py-2.5 font-mono text-xs font-bold uppercase text-white shadow-xs hover:bg-teal-dark md:hidden"
+              >
+                <QrCode size={16} strokeWidth={2.5} /> QR CODE
+              </button>
+            </div>
+          </motion.div>
 
-      {/* Passenger Queue */}
-      <div className="flex flex-1 flex-col">
-        <div className="mb-2 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-espresso">
-          <span>PASSENGERS ON BOARD ({humans.length})</span>
-          {humans.length < 2 && isHost && (
-            <span className="rounded border border-crimson/30 bg-crimson/10 px-1.5 py-0.5 text-[10px] font-bold text-crimson">
-              NEED 2+ PLAYERS
-            </span>
+          {/* Route & Spots Preview */}
+          {config && (
+            <motion.div
+              initial={{ opacity: 0, y: 28, scale: 0.94 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ type: "spring", stiffness: 250, damping: 22, delay: 0.92 }}
+              className="enamel-plate p-4"
+            >
+              <div className="mb-2 flex items-center justify-between border-b border-plate-border/60 pb-1.5">
+                <span className="font-mono text-xs font-bold uppercase text-espresso">{config.category}</span>
+                <span className="font-mono text-[10px] font-bold text-teal">
+                  {config.titles.length} SPOTS · {config.durationSeconds}S
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {config.titles.map((t, i) => (
+                  <motion.span
+                    key={t}
+                    initial={{ opacity: 0, scale: 0.55, y: 10, rotate: i % 2 === 0 ? -4 : 4 }}
+                    animate={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 18, delay: 1.02 + i * 0.06 }}
+                    className="rounded-lg border border-plate-border bg-milk px-2.5 py-1 font-mono text-xs font-bold text-espresso"
+                  >
+                    {t}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
           )}
         </div>
-        <ul className="flex flex-col gap-2">
-          {humans.map((h) => (
-            <motion.li
-              key={h.id}
-              initial={{ x: -10, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              className="enamel-plate flex items-center gap-3 px-3.5 py-2.5 font-bold text-sm text-espresso"
-            >
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-plate-border bg-mango/30 text-lg">
-                {h.avatar}
-              </span>
-              <span className="truncate">{h.name}</span>
-              {h.id === meId && (
-                <span className="ml-auto rounded border border-teal/30 bg-teal/10 px-2 py-0.5 font-mono text-[10px] font-bold text-teal">
-                  YOU
+
+        {/* Right Stage: Passenger Roster Grid & Launch Dispatch */}
+        <div className="flex flex-1 flex-col justify-between gap-4 md:col-span-7 md:min-h-0">
+          <div className="flex min-h-0 flex-1 flex-col">
+            <div className="mb-2 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-espresso">
+              <span>PASSENGERS ON BOARD ({humans.length})</span>
+              {humans.length < 2 && isHost && (
+                <span className="rounded border border-crimson/30 bg-crimson/10 px-1.5 py-0.5 text-[10px] font-bold text-crimson">
+                  NEED 2+ PLAYERS
                 </span>
               )}
-            </motion.li>
-          ))}
-          {humans.length === 0 && (
-            <li className="enamel-plate p-4 text-center font-mono text-xs text-espresso/60">
-              Boarding passengers…
-            </li>
-          )}
-        </ul>
+            </div>
+            <ul className="grid grid-cols-1 gap-2 overflow-y-auto md:grid-cols-2 md:content-start md:gap-2.5 md:pr-1">
+              {humans.map((h) => (
+                <motion.li
+                  key={h.id}
+                  initial={{ x: -10, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  className="enamel-plate flex items-center gap-3 px-3.5 py-2.5 font-bold text-sm text-espresso"
+                >
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-plate-border bg-mango/30 text-lg">
+                    {h.avatar}
+                  </span>
+                  <span className="truncate">{h.name}</span>
+                  {h.id === meId && (
+                    <span className="ml-auto shrink-0 rounded border border-teal/30 bg-teal/10 px-2 py-0.5 font-mono text-[10px] font-bold text-teal">
+                      YOU
+                    </span>
+                  )}
+                </motion.li>
+              ))}
+              {humans.length === 0 && (
+                <li className="enamel-plate p-4 text-center font-mono text-xs text-espresso/60 md:col-span-2">
+                  Boarding passengers…
+                </li>
+              )}
+            </ul>
+          </div>
+
+          {/* Bottom Launch Button */}
+          <div className="flex flex-col gap-2">
+            {isHost ? (
+              <button
+                disabled={total < 2}
+                onClick={onStart}
+                className="enamel-press flex items-center justify-center gap-2 rounded-2xl border border-teal-dark bg-teal py-4 font-mono text-base font-bold tracking-wider text-white shadow-md hover:bg-teal-dark disabled:bg-tin disabled:text-espresso/40"
+              >
+                <Rocket size={18} strokeWidth={2.5} /> BYAHE NA! (START PURGE)
+              </button>
+            ) : (
+              <div className="enamel-plate p-3.5 text-center font-mono text-xs font-bold text-espresso/80">
+                ⏳ Waiting for driver to start the trip…
+              </div>
+            )}
+
+            <button
+              onClick={onLeave}
+              className="self-center font-mono text-xs font-bold text-espresso/60 hover:text-espresso hover:underline md:hidden"
+            >
+              ← Leave Jeepney
+            </button>
+          </div>
+        </div>
       </div>
-
-      {/* Bottom Launch Button */}
-      {isHost ? (
-        <div className="mt-auto flex flex-col gap-2">
-          <button
-            disabled={total < 2}
-            onClick={onStart}
-            className="enamel-press flex items-center justify-center gap-2 rounded-2xl border border-teal-dark bg-teal py-4 font-mono text-base font-bold tracking-wider text-white shadow-md hover:bg-teal-dark disabled:bg-tin disabled:text-espresso/40"
-          >
-            <Rocket size={18} strokeWidth={2.5} /> BYAHE NA! (START PURGE)
-          </button>
-        </div>
-      ) : (
-        <div className="mt-auto enamel-plate p-3.5 text-center font-mono text-xs font-bold text-espresso/80">
-          ⏳ Waiting for driver to start the trip…
-        </div>
-      )}
-
-      <button
-        onClick={onLeave}
-        className="self-center font-mono text-xs font-bold text-espresso/60 hover:text-espresso hover:underline"
-      >
-        ← Leave Jeepney
-      </button>
 
       {showQr && (
         <div

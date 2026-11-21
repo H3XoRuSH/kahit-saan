@@ -35,18 +35,23 @@ export function FoodCard({ index, card, limit, meId, onStrike, onHeart, locked }
         damping: 20,
         delay: 0.86 + Math.min(index * 0.08, 0.56),
       }}
-      className={`enamel-plate relative flex flex-col justify-between gap-2 p-3 ${bg} transition-colors`}
+      className={`enamel-plate relative flex flex-col justify-between gap-2 p-3 md:p-4 ${bg} transition-all md:hover:-translate-y-0.5 md:hover:border-espresso/30`}
     >
       <div>
-        <motion.div
-          key={card.strikesFrom.length}
-          initial={{ x: card.strikesFrom.length ? -4 : 0 }}
-          animate={{ x: 0 }}
-          transition={{ type: "spring", stiffness: 800, damping: 10 }}
-          className={`font-bold text-base leading-snug text-espresso ${banned ? "line-through opacity-60" : ""}`}
-        >
-          {card.title}
-        </motion.div>
+        <div className="flex items-start justify-between gap-1.5">
+          <motion.div
+            key={card.strikesFrom.length}
+            initial={{ x: card.strikesFrom.length ? -4 : 0 }}
+            animate={{ x: 0 }}
+            transition={{ type: "spring", stiffness: 800, damping: 10 }}
+            className={`font-bold text-base md:text-lg leading-snug text-espresso ${banned ? "line-through opacity-60" : ""}`}
+          >
+            {card.title}
+          </motion.div>
+          <span className="hidden md:inline-block shrink-0 rounded border border-plate-border bg-milk px-1.5 py-0.5 font-mono text-[10px] font-bold text-espresso/60">
+            0{index + 1}
+          </span>
+        </div>
 
         {/* Tokens Container */}
         <div className="mt-1.5 flex min-h-6 flex-wrap items-center gap-1">
@@ -169,13 +174,15 @@ export function TokenDock({ options, meId, locked, onPickUp, onLock }: DockProps
   );
 
   return (
-    <div className="flex items-stretch gap-2">
-      {slot("s0", "❌", strikes[0], "strike")}
-      {slot("s1", "❌", strikes[1], "strike")}
-      {slot("h", "❤️", heart, "heart")}
+    <div className="flex items-stretch gap-2 md:flex-col">
+      <div className="contents md:grid md:grid-cols-3 md:gap-1.5">
+        {slot("s0", "❌", strikes[0], "strike")}
+        {slot("s1", "❌", strikes[1], "strike")}
+        {slot("h", "❤️", heart, "heart")}
+      </div>
       <button
         onClick={onLock}
-        className={`enamel-press rounded-xl px-4 font-mono text-xs font-bold uppercase leading-tight shadow-xs transition-all ${
+        className={`enamel-press rounded-xl px-4 md:py-3 font-mono text-xs font-bold uppercase leading-tight shadow-xs transition-all ${
           locked
             ? "border border-calamansi bg-calamansi text-white"
             : "border border-espresso bg-espresso text-milk"
@@ -184,8 +191,8 @@ export function TokenDock({ options, meId, locked, onPickUp, onLock }: DockProps
         {locked ? (
           <>
             LOCKED ✔
-            <br />
-            <span className="text-[9px] font-medium opacity-80">TAP UNLOCK</span>
+            <br className="md:hidden" />
+            <span className="text-[9px] font-medium opacity-80 md:ml-2">TAP UNLOCK</span>
           </>
         ) : (
           "LOCK IN"

@@ -51,23 +51,43 @@ export default function SpinWheel({ room, wheel, isGuest, dispatch }: Props) {
   const center = 150;
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col items-center justify-center gap-6 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] bg-milk">
-      {/* Header Banner */}
-      <div className="enamel-plate border-mango-dark/40 bg-gradient-to-r from-mango to-amber-300 p-4 text-center text-espresso shadow-md w-full">
-        <div className="jeepney-stripes mb-2 h-2 w-full rounded-full" />
-        <div className="font-mono text-xs font-bold uppercase tracking-wider text-crimson">
-          ⚡ PATAS SA TAP WAR! ⚡
+    <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col items-center justify-center gap-6 bg-milk p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] md:grid md:h-dvh md:max-w-5xl md:grid-cols-12 md:gap-8 md:overflow-hidden md:px-6 md:py-6 lg:max-w-6xl lg:px-8">
+      {/* Left Column on PC/Tablet: Header Banner & Contender Legend */}
+      <div className="flex w-full flex-col gap-4 md:col-span-5">
+        <div className="enamel-plate w-full border-mango-dark/40 bg-gradient-to-r from-mango to-amber-300 p-4 md:p-5 text-center md:text-left text-espresso shadow-md">
+          <div className="jeepney-stripes mb-2 h-2 w-full rounded-full" />
+          <div className="font-mono text-xs font-bold uppercase tracking-wider text-crimson">
+            ⚡ PATAS SA TAP WAR! ⚡
+          </div>
+          <div className="sign-dropshadow font-extrabold text-2xl md:text-3xl leading-tight">
+            GULONG NG PALAD!
+          </div>
+          <div className="mt-1 font-mono text-xs font-bold uppercase text-espresso/80">
+            Tadhana na ang bahala sa {candidates.length} pantay na boto!
+          </div>
         </div>
-        <div className="sign-dropshadow font-extrabold text-2xl leading-tight">
-          GULONG NG PALAD!
-        </div>
-        <div className="font-mono text-xs font-bold text-espresso/80 mt-1 uppercase">
-          Tadhana na ang bahala sa {candidates.length} pantay na boto!
+
+        {/* Tied Contenders Legend (PC/Tablet) */}
+        <div className="hidden md:flex md:flex-col md:gap-2 enamel-plate p-4">
+          <div className="border-b border-plate-border/60 pb-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-espresso/70">
+            TIED CONTENDERS ({candidates.length})
+          </div>
+          <ul className="flex flex-col gap-1.5">
+            {candidates.map((c, i) => (
+              <li key={c.id} className="flex items-center gap-2.5 font-mono text-xs font-bold text-espresso">
+                <span
+                  className="h-3.5 w-3.5 shrink-0 rounded-sm border border-espresso/40"
+                  style={{ backgroundColor: SLICE_COLORS[i % SLICE_COLORS.length] }}
+                />
+                <span className="truncate">{c.title}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
       {/* Wheel Area */}
-      <div className="relative my-auto flex items-center justify-center py-6">
+      <div className="relative my-auto flex items-center justify-center py-6 md:col-span-7">
         {/* Pointer Needle at Top */}
         <div className="absolute top-2 z-20 flex flex-col items-center">
           <div className="h-0 w-0 border-x-[14px] border-x-transparent border-t-[24px] border-t-crimson drop-shadow-md" />
@@ -84,7 +104,7 @@ export default function SpinWheel({ room, wheel, isGuest, dispatch }: Props) {
               duration: wheel.durationMs / 1000,
               ease: [0.12, 0.8, 0.25, 1],
             }}
-            className="rounded-full shadow-inner overflow-hidden w-[340px] h-[340px] max-w-[85vw] max-h-[85vw]"
+            className="h-[340px] w-[340px] max-h-[85vw] max-w-[85vw] overflow-hidden rounded-full shadow-inner md:h-[420px] md:w-[420px] md:max-h-[72dvh] md:max-w-[72dvh]"
           >
             <svg viewBox="0 0 300 300" className="w-full h-full">
               {candidates.map((candidate, i) => {

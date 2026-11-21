@@ -58,34 +58,68 @@ export default function TapWar({ room, tap, isGuest, dispatch, act }: Props) {
     else act({ t: "tap", optionId, n: 1 });
   };
 
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.repeat) return;
+      const idx =
+        e.key === "1" || e.key === "ArrowLeft"
+          ? 0
+          : e.key === "2" || e.key === "ArrowRight"
+          ? 1
+          : e.key === "3" || e.key === "ArrowUp"
+          ? 2
+          : e.key === "4" || e.key === "ArrowDown"
+          ? 3
+          : -1;
+      if (idx >= 0 && finalists[idx]) {
+        e.preventDefault();
+        onTap(finalists[idx].id);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  });
+
+  const gridCols =
+    finalists.length === 2
+      ? "md:grid-cols-2"
+      : finalists.length === 3
+      ? "md:grid-cols-3"
+      : "md:grid-cols-2 lg:grid-cols-4";
+
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col gap-3.5 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] bg-milk">
+    <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col gap-3.5 bg-milk p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] md:h-dvh md:max-w-5xl md:gap-5 md:overflow-hidden md:px-6 md:py-6 lg:max-w-6xl lg:px-8">
       {/* Horn Duel Header */}
       <motion.div
         animate={{ scale: [1, 1.015, 1] }}
         transition={{ repeat: Infinity, duration: 0.5 }}
-        className="enamel-plate border-mango-dark/40 bg-gradient-to-r from-mango to-amber-300 p-4 text-center text-espresso shadow-md"
+        className="enamel-plate border-mango-dark/40 bg-gradient-to-r from-mango to-amber-300 p-4 text-center text-espresso shadow-md md:flex md:items-center md:justify-between md:px-6 md:py-4 md:text-left"
       >
-        <div className="jeepney-stripes mb-2 h-2 w-full rounded-full" />
-        <div className="font-mono text-xs font-bold uppercase tracking-wider text-crimson">
-          ⚡ PATAS ANG LABAN · BUBUSINA NA! ⚡
+        <div>
+          <div className="jeepney-stripes mb-2 h-2 w-full rounded-full md:w-48" />
+          <div className="font-mono text-xs font-bold uppercase tracking-wider text-crimson">
+            ⚡ PATAS ANG LABAN · BUBUSINA NA! ⚡
+          </div>
+          <div className="sign-dropshadow font-extrabold text-2xl md:text-3xl leading-tight">
+            5-SECOND TAP WAR!
+          </div>
         </div>
-        <div className="sign-dropshadow font-extrabold text-2xl leading-tight">
-          5-SECOND TAP WAR!
-        </div>
-        <div className="my-1 font-mono text-4xl font-extrabold tabular-nums">
-          {(left / 1000).toFixed(1)}s
-        </div>
-        <div className="mx-auto h-3 w-4/5 overflow-hidden rounded-full border border-plate-border bg-white">
-          <div
-            className="h-full rounded-full bg-crimson transition-all duration-100"
-            style={{ width: `${Math.min(100, (left / TAP_WAR_MS) * 100)}%` }}
-          />
+
+        <div className="mt-1 md:mt-0 md:flex md:w-72 md:flex-col md:items-end">
+          <div className="my-1 font-mono text-4xl md:text-5xl font-extrabold tabular-nums">
+            {(left / 1000).toFixed(1)}s
+          </div>
+          <div className="mx-auto h-3 w-4/5 overflow-hidden rounded-full border border-plate-border bg-white md:mx-0 md:w-full">
+            <div
+              className="h-full rounded-full bg-crimson transition-all duration-100"
+              style={{ width: `${Math.min(100, (left / TAP_WAR_MS) * 100)}%` }}
+            />
+          </div>
         </div>
       </motion.div>
 
-      {/* Giant Enamel Mash Buttons */}
-      <div className="flex flex-1 flex-col gap-3.5">
+      {/* Giant Enamel Mash Buttons (Side-by-Side Arcade Paddles on PC/Tablet) */}
+      <div className={`flex flex-1 flex-col gap-3.5 md:grid ${gridCols} md:gap-5 md:min-h-0`}>
         {finalists.map((o, i) => {
           const isSecond = i % 2 !== 0;
           return (
@@ -93,7 +127,7 @@ export default function TapWar({ room, tap, isGuest, dispatch, act }: Props) {
               key={o.id}
               whileTap={{ scale: 0.97 }}
               onPointerDown={() => onTap(o.id)}
-              className={`enamel-press flex min-h-[140px] flex-1 select-none flex-col items-center justify-center gap-1.5 rounded-2xl border p-4 shadow-md transition-all ${
+              className={`enamel-press flex min-h-[140px] flex-1 select-none flex-col items-center justify-center gap-1.5 rounded-2xl border p-4 md:p-6 shadow-md transition-all ${
                 isSecond
                   ? "border-teal-dark bg-teal text-white hover:bg-teal-dark"
                   : "border-crimson bg-crimson text-white hover:bg-red-700"
@@ -101,12 +135,12 @@ export default function TapWar({ room, tap, isGuest, dispatch, act }: Props) {
               style={{ touchAction: "manipulation" }}
             >
               <span className="font-mono text-xs font-bold uppercase tracking-wider opacity-85">
-                TAP TO CROWN
+                TAP TO CROWN <span className="hidden md:inline">· [KEY {i + 1}]</span>
               </span>
-              <span className="sign-dropshadow font-extrabold text-3xl tracking-tight leading-none text-center">
+              <span className="sign-dropshadow font-extrabold text-3xl md:text-4xl tracking-tight leading-none text-center">
                 {o.title}
               </span>
-              <span className="font-mono text-5xl font-extrabold">
+              <span className="font-mono text-5xl md:text-7xl font-extrabold tabular-nums">
                 {o.tiebreakerTaps}
               </span>
 
@@ -125,8 +159,8 @@ export default function TapWar({ room, tap, isGuest, dispatch, act }: Props) {
         })}
       </div>
 
-      <div className="rounded-xl border border-plate-border bg-white p-2 text-center font-mono text-xs font-bold uppercase text-espresso shadow-xs">
-        YOUR TAPS: {mine}
+      <div className="rounded-xl border border-plate-border bg-white p-2 md:py-2.5 text-center font-mono text-xs font-bold uppercase text-espresso shadow-xs">
+        YOUR TAPS: {mine} <span className="hidden md:inline text-espresso/60">· CLICK OR PRESS NUMBER KEYS (1–{finalists.length})</span>
       </div>
     </main>
   );

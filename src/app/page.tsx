@@ -79,7 +79,7 @@ function PhaseShutter({
         transition={{ duration: 1.25, times: [0, 0.24, 0.72, 1], ease: [0.22, 1, 0.36, 1] }}
         className={`flex flex-1 items-end justify-center pb-5 px-4 shadow-lg ${spec.topBg}`}
       >
-        <div className="sign-dropshadow font-mono text-3xl font-extrabold tracking-widest uppercase">
+        <div className="sign-dropshadow font-mono text-3xl md:text-5xl font-extrabold tracking-widest uppercase">
           {spec.top}
         </div>
       </motion.div>
@@ -90,7 +90,7 @@ function PhaseShutter({
         transition={{ duration: 1.25, times: [0, 0.24, 0.72, 1], ease: [0.22, 1, 0.36, 1] }}
         className={`flex flex-1 items-start justify-center pt-5 px-4 shadow-lg ${spec.bottomBg}`}
       >
-        <div className="rounded-xl border border-current/25 px-3.5 py-1.5 font-mono text-xs font-bold tracking-widest uppercase">
+        <div className="rounded-xl border border-current/25 px-3.5 py-1.5 md:px-5 md:py-2 font-mono text-xs md:text-sm font-bold tracking-widest uppercase">
           {roomCode ? `${roomCode} · ${spec.bottom}` : spec.bottom}
         </div>
       </motion.div>
